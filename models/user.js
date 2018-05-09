@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var User = sequelize.define("users", {
+    var User = sequelize.define("User", {
       // Giving the Author model a name of type STRING
       firstName: {
           type: DataTypes.STRING
@@ -7,19 +7,15 @@ module.exports = function(sequelize, DataTypes) {
       lastName: {
           type: DataTypes.STRING
       },
-      userName: {
+        email: { 
+          type: DataTypes.STRING,
+          unique: true,
+          allowNull: false
+      },
+      password: {
           type: DataTypes.STRING,
           allowNull: false
       },
-      passWord: {
-          type: DataTypes.STRING,
-          allowNull: false
-      },
-
-      email: { 
-          type: DataTypes.STRING
-      },
-
       phoneNumber: {
           type: DataTypes.STRING,
           validate: {

@@ -1,1 +1,56 @@
-<h1>User Registration page</h1>
+<div class="row mt-5" >
+    <div class="col-md-6  mx-auto">
+        <div class="card">
+            <div class="card-header">
+                Signup
+            </div>
+            <div class="card-body">
+                <form action="/auth/register" method="post">
+                       <div class="row">
+                           <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" class="form-control" id="firstName" name="firstName" aria-describedby="emailHelp">
+                                </div>   
+                           </div>
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastName">
+                                </div>
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="loginEmail">Email address</label>
+                                    <input type="email" class="form-control" id="loginEmail" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                                </div>   
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="loginPass">Password</label>
+                                    <input type="password" class="form-control" id="loginPass" name="password" placeholder="Password">
+                                </div>   
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="passwordConfirm">Confirm Password</label>
+                                    <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Re-type Password">
+                                </div>   
+                           </div>
+                       </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                </form>
+            </div>
+            <div class="card-footer">
+                <a href="/auth/google" class="btn btn-danger btn-block googLogin"><i class="fab fa-google left"></i> Login with Google</a>
+            </div>
+        </div>
+    </div>
+</div>
