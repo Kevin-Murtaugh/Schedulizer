@@ -1,0 +1,30 @@
+{
+  "name": "schedulizer",
+  "version": "1.0.0",
+  "description": "Scheduling App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kevin-Murtaugh/Schedulizer.git"
+  },
+  "author": "Joshua Arnett, Darren Kay, Kevin Murtaugh, Andy Forbes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kevin-Murtaugh/Schedulizer/issues"
+  },
+  "homepage": "https://github.com/Kevin-Murtaugh/Schedulizer#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
+    "method-override": "^2.3.10",
+    "mysql2": "^1.5.3",
+    "passport": "^0.4.0",
+    "sequelize": "^4.37.7"
+  }
+}
