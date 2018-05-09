@@ -9,6 +9,14 @@ const sequelize = require("sequelize");
 const expressSession = require("express-session");
 
 const app = express();
+const db = require("./models");
+
+app.use(bodyParser.urlencoded({ extended: true }));
+// parse application/json
+app.use(bodyParser.json());
+
+// Static directory
+app.use(express.static("public"));
 
 const PORT = process.env.port || 8080;
 
