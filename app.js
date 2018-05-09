@@ -15,6 +15,7 @@ const db = require("./models");
 
 /**********************LOAD ROUTES***********************/
 const index = require('./routes/index');
+const auth = require('./routes/auth');
 
 
 /******************-MIDDLE WARE***********************/
@@ -50,6 +51,7 @@ app.use(express.static("public"));
 
 /**********************USE ROUTES**************************/
 app.use('/', index);
+app.use('/auth', auth);
 
 
 
