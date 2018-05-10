@@ -20,6 +20,11 @@ router.get('/register', (req, res) => {
     res.render('users/register');
 });
 
+
+router.get('/features', (req, res) => {
+    res.render('users/features');
+});
+
 //Login form post
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
@@ -48,7 +53,7 @@ router.post('/register', (req, res) => {
 
     if (req.body.password.length < 6) {
         errors.push({
-            text: 'Password must be at least 4 characters'
+            text: 'Password must be at least 6 characters'
         });
     }
 

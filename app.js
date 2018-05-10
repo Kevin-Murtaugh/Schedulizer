@@ -25,6 +25,8 @@ require('./config/passport')(passport);
 const index = require('./routes/index');
 const auth = require('./routes/auth');
 const employee = require('./routes/employee');
+const dashboard = require("./routes/dashboard");
+
 
 
 /******************-MIDDLE WARE***********************/
@@ -73,6 +75,24 @@ app.use(express.static(__dirname + '/public'));
 app.use('/', index);
 app.use('/auth', auth);
 app.use('/employee' , employee);
+app.use('/dashboard', dashboard);
+
+
+app.use((req, res, next)=>{
+    const error = new Error('Not Found');
+    error.status = 404;
+    next(error);
+});
+
+app.use((error, req, res, next)=>{
+    res.status(error.status || 500);
+    res.json({
+        error: {
+            message: error.message
+        }
+    });
+});
+
 
 const PORT = process.env.port || 8080;
 
