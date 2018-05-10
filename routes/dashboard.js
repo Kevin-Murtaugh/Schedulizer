@@ -6,8 +6,10 @@ const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
 const db = require("../models");
 
 
-router.get("/dashboard", function(req, res) {
+router.get("/", ensureAuthenticated, function(req, res) {
     res.render("index/dashboard");
 });
 
 
+
+module.exports = router;

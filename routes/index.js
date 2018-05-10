@@ -3,7 +3,7 @@ const router = express.Router();
 const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
 
 //Main Route
-router.get('/', (req, res)=>{
+router.get('/', ensureGuest, (req, res)=>{
    res.render('index/welcome'); 
 });
 
