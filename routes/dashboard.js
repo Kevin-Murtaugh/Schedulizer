@@ -4,9 +4,10 @@ const path = require("path");
 const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
 
 const db = require("../models");
+
 router.use(express.static(path.join(__dirname, '../public')));
 
-router.get("/", ensureAuthenticated, function(req, res) {
+router.get("/",  function(req, res) {
     res.render("index/dashboard");
 });
 
