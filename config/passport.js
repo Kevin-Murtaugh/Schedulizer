@@ -43,7 +43,7 @@ module.exports = function(passport){
                 id: id
             }
         }).then(user => done(null, user));
-        //User.findById(id).then(user => done(null, user));
+
     });
     
 }

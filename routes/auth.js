@@ -3,8 +3,11 @@ const router = express.Router();
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const path = require('path');
 
 const db = require("../models");
+
+router.use(express.static(path.join(__dirname, '../public')));
 
 /***********************LOCAL AUTH ROUTES*******************************/
 //User Login Route
