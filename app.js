@@ -8,9 +8,17 @@ const cookieParser = require("cookie-parser");
 const sequelize = require("sequelize");
 const session = require("express-session");
 const passport = require("passport");
+const flash = require('connect-flash');
 
 const app = express();
+
+
+
+/******************LOAD MODELS*************************/
 const db = require("./models");
+
+//Passport Config
+require('./config/passport')(passport);
 
 
 /**********************LOAD ROUTES***********************/
@@ -44,6 +52,17 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(flash());
+
+//Set Global vars
+app.use((req, res, next)=>{
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    res.locals.user = req.user || null;
+    next();
+});
+
 
 // Static directory
 app.use(express.static("public"));
@@ -52,8 +71,6 @@ app.use(express.static("public"));
 /**********************USE ROUTES**************************/
 app.use('/', index);
 app.use('/auth', auth);
-
-
 
 const PORT = process.env.port || 8080;
 
