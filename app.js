@@ -24,6 +24,7 @@ require('./config/passport')(passport);
 /**********************LOAD ROUTES***********************/
 const index = require('./routes/index');
 const auth = require('./routes/auth');
+const employee = require('./routes/employee');
 
 
 /******************-MIDDLE WARE***********************/
@@ -71,6 +72,7 @@ app.use(express.static(__dirname + '/public'));
 /**********************USE ROUTES**************************/
 app.use('/', index);
 app.use('/auth', auth);
+app.use('/employee' , employee);
 
 const PORT = process.env.port || 8080;
 
