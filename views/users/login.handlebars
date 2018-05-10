@@ -1,0 +1,25 @@
+<div class="row mt-5" >
+    <div class="col-md-4  mx-auto">
+        <div class="card text-white bg-dark">
+            <div class="card-header">
+                Login
+            </div>
+            <div class="card-body">
+                <form action="/auth/login" method="post">
+                    <div class="form-group">
+                        <label for="loginEmail">Email address</label>
+                        <input type="email" class="form-control" id="loginEmail" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPass">Password</label>
+                        <input type="password" class="form-control" id="loginPass" name="password" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                </form>
+            </div>
+            <div class="card-footer">
+                <a href="/auth/google" class="btn btn-danger btn-block googLogin"><i class="fab fa-google left"></i> Login with Google</a>
+            </div>
+        </div>
+    </div>
+</div>
