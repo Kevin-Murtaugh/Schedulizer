@@ -26,5 +26,13 @@
     "database": "schedule_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
+  },
+  
+  "josh": {
+    "username": "root",
+    "password": "password",
+    "database": "schedule_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   }
 }
