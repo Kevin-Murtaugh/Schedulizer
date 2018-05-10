@@ -1,9 +1,25 @@
 $(function() {
 
-    // page is now ready, initialize the calendar...
-  
-    $('#calendar').fullCalendar({
-      // put your options and callbacks here
-    })
-  
+  $('#calendar').fullCalendar({
+    themeSystem: 'bootstrap4',
+    defaultView: 'agendaWeek',
+    firstDay: 1,
+    allDaySlot: false,
+    slotEventOverlap: true,
+    header: {
+      left: 'prev,next',
+      center: 'title',
+      right: 'basicWeek, month'
+    },
+    eventLimit: true // allow "more" link when too many events
   });
+
+});
+        
+        
+        
+        
+        
+        
+        
+     
