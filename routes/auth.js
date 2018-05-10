@@ -20,11 +20,6 @@ router.get('/register', (req, res) => {
     res.render('users/register');
 });
 
-
-router.get('/features', (req, res) => {
-    res.render('users/features');
-});
-
 //Login form post
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
