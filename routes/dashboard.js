@@ -14,4 +14,8 @@ router.get('/add-shift', function(req,res) {
     res.render("shifts/add-shift");
 });
 
+router.post('/add-shift', function(req, res) {
+    console.log(req.body);
+});
+
 module.exports = router;
