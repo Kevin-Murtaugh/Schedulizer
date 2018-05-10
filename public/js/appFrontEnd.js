@@ -8,9 +8,29 @@
     header: {
       left: 'prev,next',
       center: 'title',
-      right: 'basicWeek, month'
+      right: 'addEventButton, basicWeek, month'
     },
-    eventLimit: true // allow "more" link when too many events
+    eventLimit: true,
+    customButtons: {
+      addEventButton: {
+        text: 'Add Employee',
+        click: function() {
+          var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+          var date = moment(dateStr);
+
+          if (date.isValid()) {
+            $('#calendar').fullCalendar('renderEvent', {
+              title: 'dynamic event',
+              start: date,
+              allDay: true
+            });
+            alert('Great. Now, update your database...');
+          } else {
+            alert('Invalid date.');
+          }
+        }
+      }
+    }
   });
 
 
@@ -94,7 +114,7 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
             let date = day.getAttribute('data-date');
 
             let addShiftBtn = document.createElement('button');
-                addShiftBtn.classList = 'btn btn-secondary addShiftBtn';
+                addShiftBtn.classList = 'btn btn-secondary btn-block addShiftBtn';
                 addShiftBtn.innerHTML = 'Add Shift';
                 addShiftBtn.setAttribute('data-date', date);
             day.appendChild(addShiftBtn);
