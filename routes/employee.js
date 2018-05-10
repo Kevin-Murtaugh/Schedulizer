@@ -2,10 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-
+const path = require("path");
 const db = require("../models");
 
-
+router.use(express.static(path.join(__dirname, '../public')));
 /***********************LOCAL EMPLOYEE ROUTES*******************************/
 //Employee route
 router.get('/add', (req, res) => {
