@@ -72,6 +72,25 @@ app.use(express.static(__dirname + '/public'));
 app.use('/', index);
 app.use('/auth', auth);
 
+
+app.use((req, res, next)=>{
+    const error = new Error('Not Found');
+    error.status = 404;
+    next(error);
+});
+
+app.use((error, req, res, next)=>{
+    res.status(error.status || 500);
+    res.json({
+        error: {
+            message: error.message
+        }
+    });
+});
+
+
+
+
 const PORT = process.env.port || 8080;
 
 db.sequelize.sync({ force: true }).then(function() {
