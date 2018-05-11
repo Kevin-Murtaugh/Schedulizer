@@ -1,25 +1,4 @@
 
-$("document").ready(function() {
-    const getDepartment = function() {
-        $("#department").on("change", function() {
-            const department = $("#department").val();
-            if(department === "FOH") {
-                $.post("/add-shift", department)
-                .done(function(data) {
-                    console.log(data);
-                });
-            } else {
-                $.post("/add-shift", department)
-                .done(function(data) {
-                    console.log(data);
-                }); 
-            }
-        });
-    }
-
-    getDepartment();
-});
-
 
   $('#calendar').fullCalendar({
     themeSystem: 'bootstrap4',
@@ -113,16 +92,29 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
         /*----------------INPUT Events-----------------*/
         
         /*----------------CLICK Events-----------------*/
-        document.querySelector(UISelectors.nextWeek).addEventListener('click', appendAddShiftBtns);
-        document.querySelector(UISelectors.prevWeek).addEventListener('click', appendAddShiftBtns);
-              
-        document.querySelector(UISelectors.tableBordered).addEventListener('click', (e)=>{
-            if(e.target.classList.contains('addShiftBtn')){
-                let date = e.target.getAttribute('data-date');
-                location.href = `/dashboard/add-shift/${date}`;
-            }
-            
-        });
+        let nextWeekBtn = document.querySelector(UISelectors.nextWeek);
+        if(nextWeekBtn) {
+            nextWeekBtn.addEventListener('click', appendAddShiftBtns);
+        }
+
+        let previousWeekBtn = document.querySelector(UISelectors.prevWeek)
+        if(previousWeekBtn) {
+            previousWeekBtn.addEventListener('click', appendAddShiftBtns);
+        }
+        
+        let tableBordered = document.querySelector(UISelectors.tableBordered);
+        if(tableBordered) {
+            tableBordered.addEventListener('click', (e)=>{
+                if(e.target.classList.contains('addShiftBtn')){
+                    let date = e.target.getAttribute('data-date');
+                    let department = document.querySelector('#departmentSelect');
+                    department = department.options[department.selectedIndex].value;
+                    location.href = `/dashboard/add-shift/${date}?department=${department}`;
+                }
+                
+            });
+        }   
+        
         
         
         /*----------------CHANGE Events-----------------*/

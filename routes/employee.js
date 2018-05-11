@@ -31,7 +31,7 @@ router.post('/add', (req, res) => {
                 isManager: req.body.isManager,
                 department: req.body.department
             }
-            console.log(newUser);
+            // console.log(newUser);
             db.User.create(newUser).then(function (user) {
                 req.flash('success_msg', 'Account succesfully registered.');
 
