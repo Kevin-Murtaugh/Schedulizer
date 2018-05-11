@@ -85,17 +85,17 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
         /*----------------INPUT Events-----------------*/
         
         /*----------------CLICK Events-----------------*/
-        document.querySelector(UISelectors.nextWeek).addEventListener('click', appendAddShiftBtns);
-        document.querySelector(UISelectors.prevWeek).addEventListener('click', appendAddShiftBtns);
-              
-        document.querySelector(UISelectors.tableBordered).addEventListener('click', (e)=>{
-            if(e.target.classList.contains('addShiftBtn')){
-                let date = e.target.getAttribute('data-date');
-                location.href = `/dashboard/add-shift/${date}`;
-            }
-            
-        });
-        
+//        document.querySelector(UISelectors.nextWeek).addEventListener('click', appendAddShiftBtns);
+//        document.querySelector(UISelectors.prevWeek).addEventListener('click', appendAddShiftBtns);
+//              
+//        document.querySelector(UISelectors.tableBordered).addEventListener('click', (e)=>{
+//            if(e.target.classList.contains('addShiftBtn')){
+//                let date = e.target.getAttribute('data-date');
+//                location.href = `/dashboard/add-shift/${date}`;
+//            }
+//            
+//        });
+//        
         
         /*----------------CHANGE Events-----------------*/
         
@@ -135,6 +135,25 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                 });
             });
         }
+    }
+    
+    
+    const loadCalendarSettings = function(){
+        let userID = document.querySelector('#id');
+        
+        if(userID){
+            userID = userID.value;
+            
+            fetch(`/dashboard?userid=${userID}`)
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(data) {
+                console.log(data);
+              });
+            
+        }
+        
     }
     
     //Public Methods

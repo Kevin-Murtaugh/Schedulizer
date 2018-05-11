@@ -8,6 +8,7 @@ const db = require("../models");
 router.use(express.static(path.join(__dirname, '../public')));
 
 router.get("/",  function(req, res) {
+    
     res.render("index/dashboard");
 });
 
