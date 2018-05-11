@@ -20,19 +20,24 @@ router.get('/register', (req, res) => {
     res.render('users/register');
 });
 
-
-router.get('/features', (req, res) => {
-    res.render('users/features');
-});
-
 //Login form post
 router.post('/login', (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect: '/dashboard',
-        failureRedirect: '/auth/login',
-        failureFlash: 'Invalid username or password.',
-        successFlash: 'Welcome!'
-    })(req, res, next);
+    db.User.findOne({    
+          where: {
+            email: req.body.email
+          }
+        }).then(function(user) {
+            let userid = user.dataValues.id;
+           if(user){
+               passport.authenticate('local', {
+                    successRedirect: `/dashboard?userid=${userid}`,
+                    failureRedirect: '/auth/login',
+                    failureFlash: 'Invalid username or password.',
+                    successFlash: 'Welcome!'
+                })(req, res, next);
+           } 
+        });
+    
 });
 
 

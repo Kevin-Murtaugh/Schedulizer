@@ -6,9 +6,11 @@ const {
     ensureAuthenticated,
     ensureGuest
 } = require('../helpers/auth');
+
+const path = require("path");
 const db = require("../models");
 
-
+router.use(express.static(path.join(__dirname, '../public')));
 /***********************LOCAL EMPLOYEE ROUTES*******************************/
 //Employee routes
 router.get('/view', ensureAuthenticated, (req, res) => {
@@ -28,8 +30,7 @@ router.get('/add', ensureAuthenticated, (req, res) => {
 });
 //post route for adding new employees
 router.post('/add', (req, res) => {
-    //console.log(req.body);
-
+    
     let insecurePass = req.body.password;
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -46,14 +47,15 @@ router.post('/add', (req, res) => {
                 isManager: req.body.isManager,
                 department: req.body.department
             }
-            console.log(newUser);
-            db.User.create(newUser).then(function (user) {
-                req.flash('success_msg', 'Account succesfully registered.');
 
-                res.redirect('/dashboard');
-            }).catch(err => {
-                console.log(err);
-                return;
+                db.User.create(newUser).then(function (user) {
+                    req.flash('success_msg', 'Account succesfully registered.');
+
+                    res.redirect('/dashboard');
+                }).catch(err => {
+                    console.log(err);
+                    return;
+                });
             });
         });
     });

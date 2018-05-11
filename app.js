@@ -26,6 +26,7 @@ const index = require('./routes/index');
 const auth = require('./routes/auth');
 const employee = require('./routes/employee');
 const dashboard = require("./routes/dashboard");
+const settings = require("./routes/settings");
 
 
 
@@ -76,6 +77,7 @@ app.use('/', index);
 app.use('/auth', auth);
 app.use('/employee' , employee);
 app.use('/dashboard', dashboard);
+app.use('/settings', settings);
 
 
 app.use((req, res, next)=>{
