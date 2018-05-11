@@ -1,3 +1,4 @@
+
   $('#calendar').fullCalendar({
     themeSystem: 'bootstrap4',
     defaultView: 'agendaWeek',
