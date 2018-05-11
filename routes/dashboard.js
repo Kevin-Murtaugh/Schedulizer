@@ -19,9 +19,25 @@ router.get('/add-shift/:date', function(req,res) {
     // console.log(department);
     // console.log(date);
 
-    db.User.findAll({department: department}).then(function(userData) {
-        // console.log(userData[0].dataValues);
-        res.render("shifts/add-shift");
+    db.User.findAll({
+            department: department
+    }).then(function(userData) {
+        let users = userData.map(user => {
+            // console.log(user.firstName + " " + user.lastName);
+            if(user.department === department) {
+                return {
+                    userName: user.firstName + " " + user.lastName,
+                    userID: user.id
+                }
+            }
+        }).filter(elem => {
+            return elem !== undefined;
+        });
+
+        console.log(users);
+        res.render("shifts/add-shift", {
+            users: users
+        });
     });
 });
 
