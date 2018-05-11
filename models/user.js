@@ -22,9 +22,10 @@ module.exports = function(sequelize, DataTypes) {
       },
       phoneNumber: {
           type: DataTypes.STRING,
-          validate: {
-            is: ["^(?=(?:\D*\d){10,15}\D*$)\+?[0-9]{1,3}[\s-]?(?:\(0?[0-9]{1,5}\)|[0-9]{1,5})[-\s]?[0-9][\d\s-]{5,7}\s?(?:x[\d-]{0,4})?$"]
-          }
+          //TODO Validate phone numbers correctly
+        //   validate: {
+        //     is: ["^(?=(?:\D*\d){10,15}\D*$)\+?[0-9]{1,3}[\s-]?(?:\(0?[0-9]{1,5}\)|[0-9]{1,5})[-\s]?[0-9][\d\s-]{5,7}\s?(?:x[\d-]{0,4})?$"]
+        //   }
       },
       isManager: {
           type: DataTypes.BOOLEAN,
