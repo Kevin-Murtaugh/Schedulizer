@@ -34,5 +34,14 @@
     "database": "schedule_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
+  },
+
+  "kevin": {
+    "username": "root",
+    "password": "root",
+    "database": "schedule_db",
+    "host": "127.0.0.1",
+    "port": 8889,
+    "dialect": "mysql"
   }
 }

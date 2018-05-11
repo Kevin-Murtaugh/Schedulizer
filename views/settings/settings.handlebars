@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Schedule Settings    
+                </div>
+                <div class="card-body">
+                    <form action="/settings" method="post" class="settings">
+                       <input type="hidden" name="id" value="{{user.id}}">
+                        <div class="form-group">
+                            <label for="timeIntervals">Date Format</label>
+                            <select class="form-control" id="dateFormat" name="columnHeaderFormat">
+                              <option value="D ddd YYYY">DD MON YYYY</option>
+                              <option value="D/M/YYYY">DD/MM/YYYY</option>
+                              <option value="D-M-YYYY">DD-MM-YYYY</option>
+                              <option value="D.M.YYYY">DD.MM.YYYY</option>
+                              <option value="M/D/YYYY">MM/DD/YYYY</option>
+                              <option value="YYYY/M/D">YYYY/MM/DD</option> 
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="timeIntervals">Time Duration Intervals</label>
+                            <select class="form-control" id="timeIntervals" name="slotDuration">
+                              <option value="00:15:00">15-Minute Intervals</option>
+                              <option value="00:30:00">30-Minute Intervals</option>
+                              <option value="00:60:00">1-Hour Intervals</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="timeIntervals">Week Starts On</label>
+                            <select class="form-control" id="weekStartsOn" name="firstDate">
+                              <option value="0">Sunday</option>
+                              <option value="1">Monday</option>
+                              <option value="2">Tuesday</option>
+                              <option value="3">Wednesday</option>
+                              <option value="4">Thursday</option>
+                              <option value="5">Friday</option>
+                              <option value="6">Saturday</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="timeIntervals">Min Start Time</label>
+                            <select class="form-control timeInterval" id="minStartTime" name="minTime">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="timeIntervals">Max Start Time</label>
+                            <select class="form-control timeInterval" id="maxStartTime" name="maxTime">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="notificationAddress">Send Email Notifications From Address</label>
+                            <input type="email" class="form-control" id="notificationAddress" name="notificationEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="emailName">Send Email Notifications From Name</label>
+                            <input type="text" class="form-control" id="emailName" name="emailName">
+                        </div> 
+                        <button type="submit" class="btn btn-danger">Save</button>     
+                    </form>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

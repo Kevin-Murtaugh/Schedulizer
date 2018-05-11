@@ -6,29 +6,20 @@
     firstDay: 1,
     allDaySlot: false,
     slotEventOverlap: true,
+    columnHeaderFormat: 'ddd M.D YYYY',
     header: {
       left: 'prev,next',
       center: 'title',
       right: 'addEventButton, basicWeek, month'
     },
+    minTime:  "6:00:00",
+    maxTime: "24:00:00",
     eventLimit: true,
     customButtons: {
       addEventButton: {
         text: 'Add Employee',
         click: function() {
-          var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-          var date = moment(dateStr);
-
-          if (date.isValid()) {
-            $('#calendar').fullCalendar('renderEvent', {
-              title: 'dynamic event',
-              start: date,
-              allDay: true
-            });
-            alert('Great. Now, update your database...');
-          } else {
-            alert('Invalid date.');
-          }
+            location.href = `/employee/add`;  
         }
       }
     }
@@ -56,8 +47,10 @@ const UICtrl = (function(){
         addShiftBtn: '.addShiftBtn',
         
         //Inputs
+        timeInterval: '.timeInterval',
         
         //Selects
+        
         
         //TextAreas
         
@@ -88,10 +81,13 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
     //Get UI selectors
     const UISelectors = UICtrl.getSelectors();
     
+    
+    
     const loadEventListeners = ()=>{
         /*----------------INPUT Events-----------------*/
         
         /*----------------CLICK Events-----------------*/
+
         let nextWeekBtn = document.querySelector(UISelectors.nextWeek);
         if(nextWeekBtn) {
             nextWeekBtn.addEventListener('click', appendAddShiftBtns);
@@ -116,6 +112,7 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
         }   
         
         
+
         
         /*----------------CHANGE Events-----------------*/
         
@@ -135,11 +132,53 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
         })
     }
     
+    const appendTimeIntervals = function(t1, t2){
+        let toInt  = time => ((h,m) => h*2 + m/30)(...time.split(':').map(parseFloat)),
+        toTime = int => [Math.floor(int/2), int%2 ? '30' : '00'].join(':'),
+        range  = (from, to) => Array(to-from+1).fill().map((_,i) => from + i),
+        eachHalfHour = (t1, t2) => range(...[t1, t2].map(toInt)).map(toTime);
+
+        let halfHourInterval = eachHalfHour(t1, t2);
+        let timeIntervalSelect = Array.from(document.querySelectorAll(UISelectors.timeInterval));
+        
+        if(timeIntervalSelect){
+            timeIntervalSelect.forEach(select => {
+                halfHourInterval.forEach(interval => {
+                    let option = document.createElement('option');
+                    option.text = moment(`${interval}`, 'HH:mm').format('hh:mm a');
+                    option.value = interval;
+                    select.appendChild(option);
+                    
+                });
+            });
+        }
+    }
+    
+    
+    const loadCalendarSettings = function(){
+        let userID = document.querySelector('#id');
+        
+        if(userID){
+            userID = userID.value;
+            
+            fetch(`/dashboard?userid=${userID}`)
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(data) {
+                console.log(data);
+              });
+            
+        }
+        
+    }
+    
     //Public Methods
     return {
         init: () => {
             appendAddShiftBtns();
             loadEventListeners();
+            appendTimeIntervals('00:00', '24:00');
             
         }
     }
