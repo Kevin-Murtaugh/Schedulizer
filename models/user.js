@@ -1,6 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define("User", {
-      // Giving the Author model a name of type STRING
       firstName: {
           type: DataTypes.STRING
       },
@@ -42,6 +41,13 @@ module.exports = function(sequelize, DataTypes) {
           values: ["FOH", "BOH"]
       }
     });
+    
+    User.associate = function(models) {
+        
+        User.hasMany(models.Settings, {
+            onDelete: "cascade"
+        });
+    };
 
     return User;
 
