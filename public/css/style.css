@@ -44,4 +44,12 @@
 option {
     font-weight: bold;
 }
-
+#features-background {
+    background-color: white;
+}
+.features-pic {
+        max-width:800px;
+        max-height:450px;
+        width: auto;
+        height: auto;
+}
