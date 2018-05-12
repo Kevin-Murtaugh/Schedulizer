@@ -23,7 +23,6 @@ router.get('/view', ensureAuthenticated, (req, res) => {
                 'firstName': user.firstName,
                 'lastName': user.lastName,
                 'email': user.email,
-                //when edit button is working this will work. The value of phoneNUmber, department, and hourlyPay is null right now, when their not it will display correctly
                 'phoneNumber': user.phoneNumber,
                 'department': user.department,
                 'hourlyPay': user.hourlyPay
@@ -44,7 +43,7 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
             id: req.params.id
         }
     }).then(function (dbUser) {
-       let userInfo = [];
+        let userInfo = [];
         let user = {
             'id': dbUser.dataValues.id,
             'firstName': dbUser.dataValues.firstName,
@@ -57,31 +56,30 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
         }
         userInfo.push(user);
         //console.log(user);
-        res.render('employee/employee_edit' , {
+        res.render('employee/employee_edit', {
             userProfile: user
         });
     });
 });
 //PUT method does not work, trying to get the values in mySQL to uodate when update button clicked
-router.put('/edit/:id' , ensureAuthenticated , (req, res) => {
-
-    let userId = req.params.id;
-
-    db.User.update({
+router.put('/edit/:id', ensureAuthenticated, (req, res) => {
+    let updatedUser = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        password: hash,
         phoneNumber: req.body.phoneNumber,
         hourlyPay: req.body.hourlyPay,
         isManager: req.body.isManager,
         department: req.body.department
+    };
+    db.User.update({
+        updatedUser
     }, {
         where: {
-            id : userId
+            id: req.params.id
         }
-    }).then(function(dbUser){
-      // res.render('/index/dashboard');
+    }).then(function (dbUser) {
+        res.redirect('/dashboard');
     });
 });
 
