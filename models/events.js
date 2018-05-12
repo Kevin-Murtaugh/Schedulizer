@@ -7,9 +7,6 @@ module.exports = function(sequelize, DataTypes) {
             userId:{
                 type: DataTypes.INTEGER
             },
-            shiftDate: {
-                type: DataTypes.DATEONLY
-            },
             start: {
               type: DataTypes.STRING
             },

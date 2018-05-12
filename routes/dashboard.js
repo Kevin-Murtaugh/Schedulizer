@@ -7,15 +7,17 @@ const db = require("../models");
 
 router.use(express.static(path.join(__dirname, '../public')));
 
-router.get("/",  function(req, res) {
+router.get("/", ensureAuthenticated, function(req, res) {
     
     res.render("index/dashboard");
 });
 
 router.get('/shifts.json', (req, res)=>{
     db.Event.findAll({}).then(function(eventData) {
-        console.log(eventData[0].dataValues);
-        res.json(eventData[0]);
+        
+        let eventDataArray = eventData.map(data => data.dataValues);
+
+        res.json(eventDataArray);
     });
 });
 
@@ -23,8 +25,6 @@ router.get('/shifts.json', (req, res)=>{
 router.get('/add-shift/:date', ensureAuthenticated, function(req,res) {
     let date = req.params.date;
     let department = req.query.department;
-    // console.log(department);
-    // console.log(date);
 
     db.User.findAll({
             department: department
@@ -72,9 +72,8 @@ router.post('/add-shift/:date', ensureAuthenticated, function(req, res) {
             let newEvent = {
                 title: title,
                 department: req.query.department,
-                shiftDate: req.params.date,
-                start: req.body.shiftStart,
-                end: req.body.shiftEnd,
+                start: `${req.params.date} ${req.body.shiftStart}`,
+                end: `${req.params.date} ${req.body.shiftEnd}`,
                 overlap: true,
                 className: htmlClass,
                 color: color,
