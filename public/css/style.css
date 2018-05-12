@@ -89,11 +89,16 @@ option {
 #features-background {
     background-color: white;
 }
+.features-title{
+    padding-top: 10px;
+    margin: 50px;
+}
 .features-pic {
-        max-width:800px;
-        max-height:450px;
+        max-width:600px;
+        max-height:340px;
         width: auto;
         height: auto;
+        float: left;
 }
 
 .publishStatusBtn {
