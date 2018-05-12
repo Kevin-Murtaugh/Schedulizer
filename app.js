@@ -28,7 +28,8 @@ const employee = require('./routes/employee');
 const dashboard = require("./routes/dashboard");
 const settings = require("./routes/settings");
 
-
+const features = require("./routes/features");
+const pricing = require("./routes/pricing");
 
 /******************-MIDDLE WARE***********************/
 //Handlebars Middleware
@@ -79,6 +80,8 @@ app.use('/employee' , employee);
 app.use('/dashboard', dashboard);
 app.use('/settings', settings);
 
+app.use('/features', features);
+app.use('/pricing', pricing);
 
 app.use((req, res, next)=>{
     const error = new Error('Not Found');
