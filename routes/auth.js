@@ -30,7 +30,7 @@ router.post('/login', (req, res, next) => {
             let userid = user.dataValues.id;
            if(user){
                passport.authenticate('local', {
-                    successRedirect: `/dashboard?userid=${userid}`,
+                    successRedirect: `/dashboard`,
                     failureRedirect: '/auth/login',
                     failureFlash: 'Invalid username or password.',
                     successFlash: 'Welcome!'

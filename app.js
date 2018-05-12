@@ -12,6 +12,10 @@ const flash = require('connect-flash');
 
 const app = express();
 
+//Handlebars Helpers
+const {
+    select
+} = require('./helpers/hbs');
 
 
 /******************LOAD MODELS*************************/
@@ -28,13 +32,18 @@ const employee = require('./routes/employee');
 const dashboard = require("./routes/dashboard");
 const settings = require("./routes/settings");
 
-
+const features = require("./routes/features");
+const pricing = require("./routes/pricing");
 
 /******************-MIDDLE WARE***********************/
 //Handlebars Middleware
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({
+    helpers: {
+        select: select
+    },
+    defaultLayout: 'main'
+}));
 app.set('view engine', 'handlebars');
-
 
 //Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -79,6 +88,8 @@ app.use('/employee' , employee);
 app.use('/dashboard', dashboard);
 app.use('/settings', settings);
 
+app.use('/features', features);
+app.use('/pricing', pricing);
 
 app.use((req, res, next)=>{
     const error = new Error('Not Found');
@@ -98,7 +109,8 @@ app.use((error, req, res, next)=>{
 
 const PORT = process.env.port || 8080;
 
-db.sequelize.sync({/*force: true */}).then(function() {
+
+db.sequelize.sync().then(function() {
     app.listen(PORT, function() {
       console.log("App listening on PORT " + PORT);
     });
