@@ -12,6 +12,10 @@ const flash = require('connect-flash');
 
 const app = express();
 
+//Handlebars Helpers
+const {
+    select
+} = require('./helpers/hbs');
 
 
 /******************LOAD MODELS*************************/
@@ -32,9 +36,13 @@ const settings = require("./routes/settings");
 
 /******************-MIDDLE WARE***********************/
 //Handlebars Middleware
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({
+    helpers: {
+        select: select
+    },
+    defaultLayout: 'main'
+}));
 app.set('view engine', 'handlebars');
-
 
 //Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
