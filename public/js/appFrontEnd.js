@@ -195,3 +195,7 @@ AppCtrl.init();
         
         
 
+//data tables function
+$(document).ready( function () {
+    $('#employeeTable').DataTable();
+} );
