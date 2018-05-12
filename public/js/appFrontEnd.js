@@ -1,6 +1,19 @@
+$(function() {
 
+  fetch(`/dashboard/shifts.json`)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(eventData) {
+        console.log(eventData);
 
-  $('#calendar').fullCalendar({
+      });
+
+ 
+
+});
+
+ $('#calendar').fullCalendar({
     themeSystem: 'bootstrap4',
     defaultView: 'agendaWeek',
     firstDay: 1,
@@ -15,6 +28,10 @@
     minTime:  "6:00:00",
     maxTime: "24:00:00",
     eventLimit: true,
+    selectable:true,
+    selectHelper: true,
+    editable: true,
+    
     customButtons: {
       addEventButton: {
         text: 'Add Employee',
@@ -24,6 +41,8 @@
       }
     }
   });
+
+  
 
 
 
@@ -173,6 +192,8 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
         
     }
     
+
+    
     //Public Methods
     return {
         init: () => {
@@ -189,3 +210,7 @@ AppCtrl.init();
         
         
 
+//data tables function
+$(document).ready( function () {
+    $('#employeeTable').DataTable();
+} );

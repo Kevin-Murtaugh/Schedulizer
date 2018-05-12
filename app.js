@@ -9,9 +9,13 @@ const sequelize = require("sequelize");
 const session = require("express-session");
 const passport = require("passport");
 const flash = require('connect-flash');
-
+const nodeMailer = require("nodemailer");
 const app = express();
 
+//Handlebars Helpers
+const {
+    select
+} = require('./helpers/hbs');
 
 
 /******************LOAD MODELS*************************/
@@ -33,9 +37,13 @@ const pricing = require("./routes/pricing");
 
 /******************-MIDDLE WARE***********************/
 //Handlebars Middleware
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({
+    helpers: {
+        select: select
+    },
+    defaultLayout: 'main'
+}));
 app.set('view engine', 'handlebars');
-
 
 //Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -100,6 +108,7 @@ app.use((error, req, res, next)=>{
 
 
 const PORT = process.env.port || 8080;
+
 
 db.sequelize.sync().then(function() {
     app.listen(PORT, function() {

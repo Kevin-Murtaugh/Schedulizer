@@ -18,13 +18,13 @@
                              <tbody>
                                  {{#each users}}
                               <tr>
-                                 <td>{{firstName}} {{lastName}}</td>
-                                 <td>{{email}}</td>
-                                 <td>{{phoneNumber}}</td>
-                                 <td>{{department}}</td>
-                                  <td>${{hourlyPay}}</td>
+                                 <td>{{this.firstName}} {{this.lastName}}</td>
+                                 <td>{{this.email}}</td>
+                                 <td>{{this.phoneNumber}}</td>
+                                 <td>{{this.department}}</td>
+                                  <td>{{this.hourlyPay}}</td>
                                   <!--add link to employee id so when its clicked -->
-                                  <td><a href="#" class="btn btn-info btn-lg">
+                                  <td><a href="/employee/add/{{this.id}}" class="btn btn-info btn-lg">
                                         <span class="glyphicon glyphicon-pencil"></span> Edit 
                                       </a>
                                   </td>
