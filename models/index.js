@@ -8,7 +8,7 @@ var basename  = path.basename(__filename);
 
 
 
-var env       = process.env.NODE_ENV || 'darren';
+var env       = process.env.NODE_ENV || 'development';
 
 
 
