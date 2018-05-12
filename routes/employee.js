@@ -61,8 +61,11 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
         });
     });
 });
+
 //PUT method does not work, trying to get the values in mySQL to uodate when update button clicked
-router.put('/edit/:id', ensureAuthenticated, (req, res) => {
+router.put('/edit/:id', (req, res) => {
+    console.log(req);
+    console.log("RUNNING PUT METHOD");
     let updatedUser = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
