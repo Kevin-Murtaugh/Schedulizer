@@ -86,12 +86,23 @@ option {
     padding-right: 70px;
 }
 
+#features-background {
+    background-color: white;
+}
+.features-pic {
+        max-width:800px;
+        max-height:450px;
+        width: auto;
+        height: auto;
+}
+
 .publishStatusBtn {
     font-weight: bold;
     color: black!important;
     padding-left: 55px;
     padding-right: 55px;
 }
+
 
 
 
