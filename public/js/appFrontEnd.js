@@ -1,4 +1,13 @@
+$(function() {
 
+  fetch(`/dashboard/shifts.json`)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(eventData) {
+        console.log(eventData);
+
+      });
 
   $('#calendar').fullCalendar({
     themeSystem: 'bootstrap4',
@@ -28,6 +37,10 @@
       }
     }
   });
+
+});
+
+  
 
 
 
