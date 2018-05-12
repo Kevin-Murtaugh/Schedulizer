@@ -12,6 +12,13 @@ router.get("/",  function(req, res) {
     res.render("index/dashboard");
 });
 
+router.get('/shifts.json', (req, res)=>{
+    db.Event.findAll({}).then(function(eventData) {
+        console.log(eventData[0].dataValues);
+        res.json(eventData[0]);
+    });
+});
+
 
 router.get('/add-shift/:date', ensureAuthenticated, function(req,res) {
     let date = req.params.date;
@@ -73,23 +80,18 @@ router.post('/add-shift/:date', ensureAuthenticated, function(req, res) {
                 color: color,
                 userId: req.body.userId
             }
+            
+                 db.Event.create(newEvent).then(function (savedEvent) {
+                    //req.flash('success_msg', 'Account succesfully registered.');
+
+                    res.redirect('/dashboard');
+                }).catch(err => {
+                    console.log(err);
+                    return;
+                });
+
            
         });
-    
-    
-    
-//     db.User.create(newUser).then(function (user) {
-//        req.flash('success_msg', 'Account succesfully registered.');
-//
-//        res.redirect('/dashboard');
-//    }).catch(err => {
-//        console.log(err);
-//        return;
-//    });
-
-    res.json({
-        message: 'passed'
-    });
 });
 
 module.exports = router;
