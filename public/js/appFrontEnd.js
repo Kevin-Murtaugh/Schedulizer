@@ -9,7 +9,11 @@ $(function() {
 
       });
 
-  $('#calendar').fullCalendar({
+ 
+
+});
+
+ $('#calendar').fullCalendar({
     themeSystem: 'bootstrap4',
     defaultView: 'agendaWeek',
     firstDay: 1,
@@ -37,8 +41,6 @@ $(function() {
       }
     }
   });
-
-});
 
   
 
