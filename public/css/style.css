@@ -90,14 +90,11 @@ option {
     background-color: white;
 }
 
-<<<<<<< HEAD
 #headlines-centered {
-=======
-#headlines-centered{
->>>>>>> b558a5053a80b74e090f4d270c6ca9edb48578a4
     text-align: center;
     padding: 20px;
 }
+
 #sub-headlinemargin {
     text-align: center;
 }
@@ -110,27 +107,29 @@ option {
         height: auto;
         justify-content: right;
 }
+
 #pricing-background {
     background-color: lightblue;
 }
 .footer-background {
     background-color:blueviolet;
 }
-<<<<<<< HEAD
+
 #footer-location {
     bottom: 0px;
     width: 1000px;
     height: 50px;
 }
-#footer-rights {
-=======
+
+
 #footer-location{
     bottom: 0px;
     width: 1000px;
     height: 100px;
 }
+
 #footer-rights{
->>>>>>> b558a5053a80b74e090f4d270c6ca9edb48578a4
+
     text-align: right;
 }
 .publishStatusBtn {
