@@ -90,15 +90,17 @@ option {
     background-color: white;
 }
 .features-title{
+    text-align: center;
     padding-top: 10px;
     margin: 50px;
 }
 .features-pic {
-        max-width:600px;
-        max-height:340px;
+        max-width:550px;
+        max-height:350px;
+        padding-left: 10px;
         width: auto;
         height: auto;
-        float: left;
+        justify-content: right;
 }
 
 .publishStatusBtn {
