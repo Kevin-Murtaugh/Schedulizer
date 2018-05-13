@@ -89,20 +89,37 @@ option {
 #features-background {
     background-color: white;
 }
-.features-title{
+
+#headlines-centered{
     text-align: center;
-    padding-top: 10px;
-    margin: 50px;
+    padding: 20px;
 }
+#sub-headlinemargin {
+    text-align: center;
+}
+
 .features-pic {
         max-width:550px;
         max-height:350px;
-        padding-left: 10px;
+        padding-left: 20px;
         width: auto;
         height: auto;
         justify-content: right;
 }
-
+#pricing-background {
+    background-color: lightblue;
+}
+.footer-background {
+    background-color:blueviolet;
+}
+#footer-location{
+    bottom: 0px;
+    width: 1000px;
+    height: 100px;
+}
+#footer-rights{
+    text-align: right;
+}
 .publishStatusBtn {
     font-weight: bold;
     color: black!important;
