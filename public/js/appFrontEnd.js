@@ -1,3 +1,56 @@
+/********************** NODE MAILER CODE HERE****************************/
+$("document").ready(function() {
+
+    $("#newsLetterBtn").on("click", function(e) {
+        if($("#emailInput").val() === "") {
+            e.preventDefault();
+            alert("Please submit a valid email address.");
+        } else {
+            $("#modal").show();
+
+            // Set time out to allow server to respond before clearing input.
+            setTimeout(function() { 
+                $("#emailInput").val("");
+            }, 50);
+        }
+    });
+
+    $("#closeModal").on("click", function() {
+        $("#modal").hide();
+    });
+});
+
+/******* END OF NODE MAILER********/
+
+  $('#calendar').fullCalendar({
+    themeSystem: 'bootstrap4',
+    defaultView: 'agendaWeek',
+    firstDay: 1,
+    allDaySlot: false,
+    slotEventOverlap: true,
+    columnHeaderFormat: 'ddd M.D YYYY',
+    header: {
+      left: 'prev,next',
+      center: 'title',
+      right: 'addEventButton, basicWeek, month'
+    },
+    minTime:  "6:00:00",
+    maxTime: "24:00:00",
+    eventLimit: true,
+    selectable:true,
+    selectHelper: true,
+    editable: true,
+    
+    customButtons: {
+      addEventButton: {
+        text: 'Add Employee',
+        click: function() {
+            location.href = `/employee/add`;  
+        }
+      }
+    }
+  });
+
 //$(function() {
 //
 //  fetch(`/dashboard/shifts.json`)
