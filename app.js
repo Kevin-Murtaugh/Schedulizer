@@ -35,6 +35,8 @@ const settings = require("./routes/settings");
 const features = require("./routes/features");
 const pricing = require("./routes/pricing");
 
+const footer = require("./routes/footer");
+
 /******************-MIDDLE WARE***********************/
 //Handlebars Middleware
 app.engine('handlebars', exphbs({
@@ -90,6 +92,10 @@ app.use('/settings', settings);
 
 app.use('/features', features);
 app.use('/pricing', pricing);
+
+
+app.use('/_footer', footer);
+
 
 app.use((req, res, next)=>{
     const error = new Error('Not Found');

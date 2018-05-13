@@ -37,7 +37,7 @@ router.get('/view', ensureAuthenticated, (req, res) => {
 });
 //render view handlebar
 
-router.get('/edit/:id', ensureAuthenticated, (req, res) => {
+router.get('/add/:id', ensureAuthenticated, (req, res) => {
     db.User.findOne({
         where: {
             id: req.params.id
@@ -63,26 +63,23 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 });
 
 //PUT method does not work, trying to get the values in mySQL to uodate when update button clicked
-router.put('/edit/:id', (req, res) => {
-    console.log(req);
-    console.log("RUNNING PUT METHOD");
-    let updatedUser = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        phoneNumber: req.body.phoneNumber,
-        hourlyPay: req.body.hourlyPay,
-        isManager: req.body.isManager,
-        department: req.body.department
-    };
-    db.User.update({
-        updatedUser
-    }, {
+router.put('/add/:id', (req, res) => {
+    db.User.findOne({
         where: {
             id: req.params.id
         }
     }).then(function (dbUser) {
-        res.redirect('/dashboard');
+        dbUser.update({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            phoneNumber: req.body.phoneNumber,
+            hourlyPay: req.body.hourlyPay,
+            isManager: req.body.isManager,
+            department: req.body.department
+        }).then(function (update){
+            res.redirect('/employee/view');
+        });
     });
 });
 
@@ -106,12 +103,10 @@ router.post('/add', (req, res) => {
                 isManager: req.body.isManager,
                 department: req.body.department
             }
-
-
             db.User.create(newUser).then(function (user) {
                 req.flash('success_msg', 'Account succesfully registered.');
 
-                res.redirect('/dashboard');
+                res.redirect('/employee/view');
             }).catch(err => {
                 console.log(err);
                 return;
@@ -119,8 +114,15 @@ router.post('/add', (req, res) => {
         });
     });
 });
-
-
-
+//delete method to remove users from DB
+router.delete('/add/:id', function(req, res){
+    console.log("destroy method");
+    db.User.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(dbUser) {
+        res.redirect("/employee/view");
+    });
+  });
 module.exports = router;
-

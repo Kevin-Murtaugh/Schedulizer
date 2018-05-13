@@ -1,4 +1,3 @@
-
 /********************** NODE MAILER CODE HERE****************************/
 $("document").ready(function() {
 
@@ -51,6 +50,55 @@ $("document").ready(function() {
       }
     }
   });
+
+//$(function() {
+//
+//  fetch(`/dashboard/shifts.json`)
+//      .then(function(response) {
+//        return response.json();
+//      })
+//      .then(function(eventData) {
+//        console.log(eventData);
+//
+//      });
+//
+// 
+//
+//});
+//
+//
+// $('#calendar').fullCalendar({
+//    themeSystem: 'bootstrap4',
+//    defaultView: 'agendaWeek',
+//    firstDay: 1,
+//    allDaySlot: false,
+//    slotEventOverlap: true,
+//    columnHeaderFormat: 'ddd M.D YYYY',
+//    header: {
+//      left: 'prev,next',
+//      center: 'title',
+//      right: 'addEventButton, basicWeek, month'
+//    },
+//    minTime:  "6:00:00",
+//    maxTime: "24:00:00",
+//    eventLimit: true,
+//    selectable:true,
+//    selectHelper: true,
+//    editable: true,
+//    eventSources: [
+//        
+//    ],
+//    customButtons: {
+//      addEventButton: {
+//        text: 'Add Employee',
+//        click: function() {
+//            location.href = `/employee/add`;  
+//        }
+//      }
+//    }
+//  });
+
+  
 
 
 
@@ -115,28 +163,7 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
         
         /*----------------CLICK Events-----------------*/
 
-        let nextWeekBtn = document.querySelector(UISelectors.nextWeek);
-        if(nextWeekBtn) {
-            nextWeekBtn.addEventListener('click', appendAddShiftBtns);
-        }
-
-        let previousWeekBtn = document.querySelector(UISelectors.prevWeek)
-        if(previousWeekBtn) {
-            previousWeekBtn.addEventListener('click', appendAddShiftBtns);
-        }
         
-        let tableBordered = document.querySelector(UISelectors.tableBordered);
-        if(tableBordered) {
-            tableBordered.addEventListener('click', (e)=>{
-                if(e.target.classList.contains('addShiftBtn')){
-                    let date = e.target.getAttribute('data-date');
-                    let department = document.querySelector('#departmentSelect');
-                    department = department.options[department.selectedIndex].value;
-                    location.href = `/dashboard/add-shift/${date}?department=${department}`;
-                }
-                
-            });
-        }   
         
         
 
@@ -146,17 +173,88 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
     }
     
     const appendAddShiftBtns = function(){
-        let headerDays = Array.from(document.querySelectorAll(UISelectors.dayHeader));
         
-        headerDays.forEach(day=>{
-            let date = day.getAttribute('data-date');
+        fetch(`/dashboard/shifts.json`)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(eventData) {
+            
+            eventData.map(data => {     
+                data.start = moment(data.start, 'YYYY-MM-DD H:mm:ss').format();
+                data.end = moment(data.end, 'YYYY-MM-DD H:mm:ss').format();
+            });
+            
+            
+                 $('#calendar').fullCalendar({
+                    themeSystem: 'bootstrap4',
+                    defaultView: 'agendaWeek',
+                    firstDay: 1,
+                    allDaySlot: false,
+                    slotEventOverlap: true,
+                    columnHeaderFormat: 'ddd M.D YYYY',
+                    header: {
+                      left: 'prev,next',
+                      center: 'title',
+                      right: 'addEventButton, month, agendaWeek, agendaDay'
+                    },
+                    minTime:  "6:00:00",
+                    maxTime: "24:00:00",
+                    events: eventData,
+                    eventLimit: true,
+                    selectable:true,
+                    selectHelper: true,
+                    editable: true,
+                    customButtons: {
+                      addEventButton: {
+                        text: 'Add Employee',
+                        click: function() {
+                            location.href = `/employee/add`;  
+                        }
+                      }
+                    }
+                  });
+            
+                        let headerDays = Array.from(document.querySelectorAll(UISelectors.dayHeader));
 
-            let addShiftBtn = document.createElement('button');
-                addShiftBtn.classList = 'btn btn-secondary btn-block addShiftBtn';
-                addShiftBtn.innerHTML = 'Add Shift';
-                addShiftBtn.setAttribute('data-date', date);
-            day.appendChild(addShiftBtn);
-        })
+                        headerDays.forEach(day=>{
+                            let date = day.getAttribute('data-date');
+
+                            let addShiftBtn = document.createElement('button');
+                                addShiftBtn.classList = 'btn btn-secondary btn-block addShiftBtn';
+                                addShiftBtn.innerHTML = 'Add Shift';
+                                addShiftBtn.setAttribute('data-date', date);
+                            day.appendChild(addShiftBtn);
+                        })
+            
+                        let nextWeekBtn = document.querySelector(UISelectors.nextWeek);
+                        if(nextWeekBtn) {
+                            nextWeekBtn.addEventListener('click', appendAddShiftBtns);
+                        }
+
+                        let previousWeekBtn = document.querySelector(UISelectors.prevWeek)
+                        if(previousWeekBtn) {
+                            previousWeekBtn.addEventListener('click', appendAddShiftBtns);
+                        }
+
+                        let tableBordered = document.querySelector(UISelectors.tableBordered);
+                        if(tableBordered) {
+                            tableBordered.addEventListener('click', (e)=>{
+                                if(e.target.classList.contains('addShiftBtn')){
+                                    let date = e.target.getAttribute('data-date');
+                                    let department = document.querySelector('#departmentSelect');
+                                    department = department.options[department.selectedIndex].value;
+                                    location.href = `/dashboard/add-shift/${date}?department=${department}`;
+                                }
+
+                            });
+                        }   
+
+          });
+        
+        
+        
+        
     }
     
     const appendTimeIntervals = function(t1, t2){
@@ -182,23 +280,6 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
     }
     
     
-    const loadCalendarSettings = function(){
-        let userID = document.querySelector('#id');
-        
-        if(userID){
-            userID = userID.value;
-            
-            fetch(`/dashboard?userid=${userID}`)
-              .then(function(response) {
-                return response.json();
-              })
-              .then(function(data) {
-                console.log(data);
-              });
-            
-        }
-        
-    }
     
 
     
@@ -218,3 +299,7 @@ AppCtrl.init();
         
         
 
+//data tables function
+$(document).ready( function () {
+    $('#employeeTable').DataTable();
+} );
