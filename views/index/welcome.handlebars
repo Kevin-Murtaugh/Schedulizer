@@ -1,3 +1,12 @@
+<!-- Modal -->
+<div id="modal"> 
+    <div class="modalcontent">
+            <h1>Your email has been registered! <hr><br></h1>
+            <h5>You should receive an email news letter confirmation from us shortly!</h5>
+            <button type="button" class="btn btn-primary mt-2" id="closeModal">close</button>
+    </div>
+</div>
+
 <div class="lp__header">
     <div class="lp__cta-container">
         <div class="lp__cta-headline text-light">
@@ -13,14 +22,15 @@
 </div>
  <div class="lp__cta-newsletter bg-dark text-light py-4 text-center">
         <div class="col-md-6 mx-auto">
-            <p>FILLER TEXT GOES HERE ABOUT JOINING OUT NEWSLETTER</p>
+            <p>FILLER TEXT GOES HERE ABOUT JOINING OUR NEWSLETTER</p>
             <form action="/" method="post">
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Enter email" name="newsLetterEmail">
+                    <input type="email" class="form-control" placeholder="Enter email" name="newsLetterEmail" id="emailInput">
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit" id="newsLetter">Sign Up</button>
+                        <button class="btn btn-primary" type="submit" id="newsLetterBtn">Sign Up</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+

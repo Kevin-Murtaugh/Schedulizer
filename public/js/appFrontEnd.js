@@ -1,4 +1,27 @@
 
+/********************** NODE MAILER CODE HERE****************************/
+$("document").ready(function() {
+
+    $("#newsLetterBtn").on("click", function(e) {
+        if($("#emailInput").val() === "") {
+            e.preventDefault();
+            alert("Please submit a valid email address.");
+        } else {
+            $("#modal").show();
+
+            // Set time out to allow server to respond before clearing input.
+            setTimeout(function() { 
+                $("#emailInput").val("");
+            }, 50);
+        }
+    });
+
+    $("#closeModal").on("click", function() {
+        $("#modal").hide();
+    });
+});
+
+/******* END OF NODE MAILER********/
 
   $('#calendar').fullCalendar({
     themeSystem: 'bootstrap4',
