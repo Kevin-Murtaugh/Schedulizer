@@ -1,13 +1,12 @@
 /********************** NODE MAILER CODE HERE****************************/
 $("document").ready(function() {
-
+    let validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
     $("#newsLetterBtn").on("click", function(e) {
         if($("#emailInput").val() === "") {
             e.preventDefault();
             alert("Please submit a valid email address.");
         } else {
             $("#modal").show();
-
             // Set time out to allow server to respond before clearing input.
             setTimeout(function() { 
                 $("#emailInput").val("");
@@ -21,6 +20,9 @@ $("document").ready(function() {
 
     $("#sendNewsLetter").on("click", function() {
         $("#adminNewsLetter").show();
+        $("#closeAdminModal").on("click", function() {
+            $("#adminNewsLetter").hide();
+        }); 
     });
 });
 

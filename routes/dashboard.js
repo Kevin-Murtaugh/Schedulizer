@@ -114,7 +114,6 @@ router.post("/dashboard", (req, res) => {
                 }
             });
             
-            
             var mailOptions = {
                 from: 'Schedulizer <SchedulizerMail@gmail.com>',
                 to: allSubscribers,
@@ -134,6 +133,6 @@ router.post("/dashboard", (req, res) => {
     });
 
     res.redirect("/dashboard");
-})
+});
 
 module.exports = router;
