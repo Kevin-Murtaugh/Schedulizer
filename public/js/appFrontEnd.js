@@ -18,6 +18,10 @@ $("document").ready(function() {
     $("#closeModal").on("click", function() {
         $("#modal").hide();
     });
+
+    $("#sendNewsLetter").on("click", function() {
+        $("#adminNewsLetter").show();
+    });
 });
 
 /******* END OF NODE MAILER********/
