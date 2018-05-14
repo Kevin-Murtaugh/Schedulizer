@@ -31,11 +31,11 @@ const auth = require('./routes/auth');
 const employee = require('./routes/employee');
 const dashboard = require("./routes/dashboard");
 const settings = require("./routes/settings");
-
 const features = require("./routes/features");
 const pricing = require("./routes/pricing");
-
 const footer = require("./routes/footer");
+const reports = require("./routes/reports");
+
 
 /******************-MIDDLE WARE***********************/
 //Handlebars Middleware
@@ -89,13 +89,10 @@ app.use('/auth', auth);
 app.use('/employee' , employee);
 app.use('/dashboard', dashboard);
 app.use('/settings', settings);
-
 app.use('/features', features);
 app.use('/pricing', pricing);
-
-
 app.use('/_footer', footer);
-
+app.use('/reports', reports);
 
 app.use((req, res, next)=>{
     const error = new Error('Not Found');
