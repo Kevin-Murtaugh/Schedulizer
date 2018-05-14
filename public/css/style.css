@@ -116,17 +116,65 @@ option {
 #features-background {
     background-color: white;
 }
-.features-title{
-    padding-top: 10px;
-    margin: 50px;
+
+#headlines-centered{
+    text-align: center;
+    padding: 20px;
 }
+#sub-headlinemargin {
+    text-align: center;
+}
+
 .features-pic {
-        max-width:600px;
-        max-height:340px;
+        max-width:550px;
+        max-height:350px;
+        padding-left: 20px;
         width: auto;
         height: auto;
-        float: left;
+        justify-content: right;
 }
+#pricing-background {
+    background-color: lightblue;
+    height: 100%;
+}
+
+.login-container {
+    height: 100%;
+}
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+  }
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+  }
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 50px;
+  }
+  
+/* .footer-background {
+    background-color:blueviolet;
+}
+
+html, body {
+    height: 100%;
+}
+#footer-location {
+    position: relative;
+    width: 100%;
+    height: 50px;
+}
+
+#footer-verbiage {
+    margin-top: 5px;
+} */
 
 .publishStatusBtn {
     font-weight: bold;
@@ -134,7 +182,24 @@ option {
     padding-left: 55px;
     padding-right: 55px;
 }
+h7 {
+    text-justify: right;
+}
 
+
+.modalcontent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #e6e6e6;
+    width: 50%;
+    height: 50%;
+    padding: 20px;
+    border: solid white;
+    border-width: 4px;
+    border-radius: 10px;
+}
 
 
 /***********intlTelInput**********/
@@ -154,5 +219,95 @@ span.country-name {
 
 
 
+#modal {
+    display: none;
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+    height: 100%;
+    width: 100%;
+}
+
+.adminModalContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #e6e6e6;
+    width: 60%;
+    height: 80%;
+    padding: 20px;
+    border: solid white;
+    border-width: 4px;
+    border-radius: 10px;
+}
+
+#adminNewsLetter {
+    display: none;
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+    height: 100%;
+    width: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Style inputs */
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+.contactContainer {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 10px;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
 
 
+.column {
+    float: left;
+    width: 50%;
+    margin-top: 6px;
+    padding: 20px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .column, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+}

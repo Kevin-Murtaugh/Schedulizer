@@ -37,6 +37,7 @@ const account = require('./routes/account');
 const features = require("./routes/features");
 const pricing = require("./routes/pricing");
 
+
 /******************-MIDDLE WARE***********************/
 //Handlebars Middleware
 app.engine('handlebars', exphbs({
@@ -94,6 +95,8 @@ app.use('/account', account);
 app.use('/features', features);
 app.use('/pricing', pricing);
 
+
+
 app.use((req, res, next)=>{
     const error = new Error('Not Found');
     error.status = 404;
@@ -113,4 +116,6 @@ app.use((error, req, res, next)=>{
 const PORT = process.env.port || 8080;
 
 
+
 db.sequelize.sync().then(()=> app.listen(PORT, ()=>  console.log("App listening on PORT " + PORT)));
+
