@@ -9,6 +9,19 @@ const db = require("../models");
 
 router.use(express.static(path.join(__dirname, '../public')));
 
+/************************GOOGLE AUTH ROUTES*************************/
+router.get('/google', passport.authenticate('google', {
+    scope: ['profile', 'email']
+}));
+
+router.get('/google/callback',
+    passport.authenticate('google', {
+        failureRedirect: '/'
+    }), (req, res) => {
+        res.redirect('/dashboard');
+    });
+
+
 /***********************LOCAL AUTH ROUTES*******************************/
 //User Login Route
 router.get('/login', (req, res) => {
@@ -50,7 +63,7 @@ router.get('/logout', (req, res) => {
 //Register Form Post
 router.post('/register', (req, res) => {
     let errors = [];
-
+    
     if (req.body.password != req.body.passwordConfirm) {
         errors.push({
             text: 'Passwords do not match'
@@ -68,7 +81,8 @@ router.post('/register', (req, res) => {
             errors: errors,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            email: req.body.email
+            email: req.body.email,
+            phoneNumber: req.body.full_phone
         });
     } else {
         
@@ -86,7 +100,8 @@ router.post('/register', (req, res) => {
                     email_error: errors,
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
-                    email: req.body.email
+                    email: req.body.email,
+                    phoneNumber: req.body.full_phone
                 });   
            } else {
                 let insecurePass = req.body.password; 
@@ -94,14 +109,15 @@ router.post('/register', (req, res) => {
                bcrypt.genSalt(10, (err, salt) => {
                     bcrypt.hash(insecurePass, salt, (err, hash) => {
                         if (err) throw err;
-
+                        
                         let newUser = {
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
                             email: req.body.email,
-                            password: hash
+                            password: hash,
+                            phoneNumber: req.body.full_phone
                         }
-
+                            console.log(newUser);
                         db.User.create(newUser).then(function(user){
                             req.flash('success_msg', 'Account succesfully registered.');
 

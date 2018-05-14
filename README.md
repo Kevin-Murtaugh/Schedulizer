@@ -32,7 +32,7 @@ Add notes about deployment here !!!!
 
 * [Node.js](https://nodejs.org/en/docs/) 
 * [FullCalendar](https://https://fullcalendar.io/docs.apache.org/)
-* [DataTables](httpshttps://datatables.net/rometools.github.io/rome/)
+* [DataTables](https://datatables.net/rometools.github.io/rome/)
 
 ## npm Packages Used
 
@@ -41,9 +41,9 @@ Add notes about deployment here !!!!
 * [express](https://expressjs.com/)
 * [express-handlebars](https://handlebarsjs.com/)
 * [express-session](https://github.com/expressjs/session)
-* [mysql2](hhttps://github.com/sidorares/node-mysql2)
+* [mysql2](https://github.com/sidorares/node-mysql2)
 * [passport](http://www.passportjs.org/)
-* [passport-local](hhttps://github.com/jaredhanson/passport-local)
+* [passport-local](https://github.com/jaredhanson/passport-local)
 * [bcryptjs](https://github.com/kelektiv/node.bcrypt.js)
 * [connect-flash](https://github.com/jaredhanson/connect-flash)
 * [cookie-parser](https://github.com/expressjs/cookie-parser)

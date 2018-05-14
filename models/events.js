@@ -28,11 +28,16 @@ module.exports = function(sequelize, DataTypes) {
             },
             color: {
               type: DataTypes.STRING
+            },
+            shiftStatus: {
+                type: DataTypes.ENUM,
+                values: ["draft", "published"],
+                defaultValue: "draft"
             }
         },{timestamps: false}
     );
 
-
+    
 
     return Event;
 

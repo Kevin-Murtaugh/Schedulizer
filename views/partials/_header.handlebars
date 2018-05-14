@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top px-5">
-        <a class="navbar-brand" href="/"><img src="./img/calendar.png" alt="" class="navbar-img__logo mr-2">Schedulizer</a>
+        <a class="navbar-brand" href="/"><img src="/img/calendar.png" alt="" class="navbar-img__logo mr-2">Schedulizer</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         {{#if user}}
             <ul class="navbar-nav ml-auto text-center mr-5">
-                <li class="nav-item active mx-2">
-                    <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="/">Schedule</a>
                 </li>
                 <li class="nav-item  mx-2">
                     <a class="nav-link" href="/message-board">Message Board</a>
@@ -16,14 +16,18 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Employees</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/employee/view">View All</a>
+                        {{#ifCond user.isAdmin '||' user.isManager}}
                         <a class="dropdown-item" href="/employee/add">Add New</a>
+                        {{/ifCond}}
                     </div>    
                 </li>
                 <li class="nav-item dropdown mx-2">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/settings">Schedule Settings</a>
-                        <a class="dropdown-item" href="/account">Your Account</a>
+                       {{#ifCond user.isAdmin '||' user.isManager}}
+                            <a class="dropdown-item" href="/settings">Schedule Settings</a>
+                        {{/ifCond}}
+                        <a class="dropdown-item" href="/account/{{user.id}}">Your Account</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/auth/logout">Sign Out</a>
                         <a class="dropdown-item" href="#" id="sendNewsLetter">Send News Letter</a>

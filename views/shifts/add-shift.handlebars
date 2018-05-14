@@ -1,3 +1,4 @@
+{{#ifCond user.isAdmin '||' user.isManager}}
 <div class="container">
     <div class="card mt-5">
         <div class="card-header">
@@ -41,3 +42,4 @@
         </div>
     </div>
 </div>
+{{/ifCond}}

@@ -1,3 +1,9 @@
+
+$("#phone").intlTelInput({
+    hiddenInput: "full_phone",
+    utilsScript:'/js/utils.js'
+});
+
 /********************** NODE MAILER CODE HERE****************************/
 $("document").ready(function() {
     let validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
@@ -28,84 +34,6 @@ $("document").ready(function() {
 
 /******* END OF NODE MAILER********/
 
-  $('#calendar').fullCalendar({
-    themeSystem: 'bootstrap4',
-    defaultView: 'agendaWeek',
-    firstDay: 1,
-    allDaySlot: false,
-    slotEventOverlap: true,
-    columnHeaderFormat: 'ddd M.D YYYY',
-    header: {
-      left: 'prev,next',
-      center: 'title',
-      right: 'addEventButton, basicWeek, month'
-    },
-    minTime:  "6:00:00",
-    maxTime: "24:00:00",
-    eventLimit: true,
-    selectable:true,
-    selectHelper: true,
-    editable: true,
-    
-    customButtons: {
-      addEventButton: {
-        text: 'Add Employee',
-        click: function() {
-            location.href = `/employee/add`;  
-        }
-      }
-    }
-  });
-
-//$(function() {
-//
-//  fetch(`/dashboard/shifts.json`)
-//      .then(function(response) {
-//        return response.json();
-//      })
-//      .then(function(eventData) {
-//        console.log(eventData);
-//
-//      });
-//
-// 
-//
-//});
-//
-//
-// $('#calendar').fullCalendar({
-//    themeSystem: 'bootstrap4',
-//    defaultView: 'agendaWeek',
-//    firstDay: 1,
-//    allDaySlot: false,
-//    slotEventOverlap: true,
-//    columnHeaderFormat: 'ddd M.D YYYY',
-//    header: {
-//      left: 'prev,next',
-//      center: 'title',
-//      right: 'addEventButton, basicWeek, month'
-//    },
-//    minTime:  "6:00:00",
-//    maxTime: "24:00:00",
-//    eventLimit: true,
-//    selectable:true,
-//    selectHelper: true,
-//    editable: true,
-//    eventSources: [
-//        
-//    ],
-//    customButtons: {
-//      addEventButton: {
-//        text: 'Add Employee',
-//        click: function() {
-//            location.href = `/employee/add`;  
-//        }
-//      }
-//    }
-//  });
-
-  
-
 
 
 //===============ITEM CONTROLLER==================
@@ -126,6 +54,9 @@ const UICtrl = (function(){
     const UISelectors = {
         //Buttons
         addShiftBtn: '.addShiftBtn',
+        agendaWeek: '.fc-agendaWeek-button',
+        agendaDay: '.fc-agendaDay-button',
+        updateStatus: '.updateStatus',
         
         //Inputs
         timeInterval: '.timeInterval',
@@ -168,7 +99,86 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
         /*----------------INPUT Events-----------------*/
         
         /*----------------CLICK Events-----------------*/
+        
+        let draftCheck = document.querySelector('#draftStatus');
+        let updateStatusBtn = document.querySelector(UISelectors.updateStatus);
+        let publishedCheck = document.querySelector('#publishedStatus');
+        let nextWeekBtn = document.querySelector(UISelectors.nextWeek);
+        let previousWeekBtn = document.querySelector(UISelectors.prevWeek);
+        let registerSubmitBtn = document.querySelector(UISelectors.registerSubmitBtn);
+        
+        if(draftCheck){
+            draftCheck.addEventListener('click', ()=>{
+                updateStatusBtn.disabled = true;
+            });
+        }
+        
+        if(publishedCheck){
+            publishedCheck.addEventListener('click', ()=>{
+                updateStatusBtn.disabled = false;
+            });
+        }
 
+        if(nextWeekBtn) {
+            nextWeekBtn.addEventListener('click', updateStatusCard);
+        }
+
+        
+        if(previousWeekBtn) {
+            previousWeekBtn.addEventListener('click', updateStatusCard);
+        }
+
+        if(updateStatusBtn){
+            updateStatusBtn.addEventListener('click', (e)=>{
+                let firstDate = document.querySelector('.fc-axis').nextElementSibling.getAttribute('data-date');
+                let lastDate = document.querySelector('.fc-axis').nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.getAttribute('data-date');
+                let managerComments = document.querySelector('#comments').value;
+                
+                if(publishedCheck.checked){
+                    
+                    let newSchedule = {
+                        managerComments: managerComments,
+                        scheduleStart: firstDate,
+                        scheduleEnd: lastDate,
+                        scheduleStatus: 'published'
+                    }
+                    
+                    fetch('/dashboard', {
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'POST',
+                        body: JSON.stringify(newSchedule)
+                    }).then(function(response) {
+                        return response.json();
+                    }).then((data)=>{
+                        
+                        document.querySelector('.commentCard').style.display = 'block';
+                        document.querySelector('.managerComments').innerHTML = data.managerComments;
+                        document.querySelector('#comments').value = '';
+                        document.querySelector('#comments').disabled = true;
+                        updateStatusBtn.disabled = true;
+                        
+                        let events = Array.from(document.querySelectorAll('.fc-v-event'));
+                        
+                        events.forEach(event => {
+                            if(event.classList.contains('FOHDraftShift')){
+                                event.classList.remove('FOHDraftShift')
+                            }else if(event.classList.contains("BOHDraftShift")){
+                                event.classList.remove('BOHDraftShift')
+                            }
+                        })
+                        
+                    }).catch(function (error) {  
+                        console.log('Request failure: ', error);  
+                    });
+                }
+                
+
+                e.preventDefault();
+            });
+        }
         
         
         
@@ -178,7 +188,7 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
         
     }
     
-    const appendAddShiftBtns = function(){
+    const displayManagerCalander = function(){
         
         fetch(`/dashboard/shifts.json`)
           .then(function(response) {
@@ -189,10 +199,13 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
             eventData.map(data => {     
                 data.start = moment(data.start, 'YYYY-MM-DD H:mm:ss').format();
                 data.end = moment(data.end, 'YYYY-MM-DD H:mm:ss').format();
+                if(data.shiftStatus == 'published'){
+                    data.className = '';
+                }
             });
+                
             
-            
-                 $('#calendar').fullCalendar({
+                 $('#managersCalendar').fullCalendar({
                     themeSystem: 'bootstrap4',
                     defaultView: 'agendaWeek',
                     firstDay: 1,
@@ -221,26 +234,65 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                     }
                   });
             
-                        let headerDays = Array.from(document.querySelectorAll(UISelectors.dayHeader));
-
-                        headerDays.forEach(day=>{
-                            let date = day.getAttribute('data-date');
-
-                            let addShiftBtn = document.createElement('button');
-                                addShiftBtn.classList = 'btn btn-secondary btn-block addShiftBtn';
-                                addShiftBtn.innerHTML = 'Add Shift';
-                                addShiftBtn.setAttribute('data-date', date);
-                            day.appendChild(addShiftBtn);
-                        })
             
-                        let nextWeekBtn = document.querySelector(UISelectors.nextWeek);
-                        if(nextWeekBtn) {
-                            nextWeekBtn.addEventListener('click', appendAddShiftBtns);
-                        }
+                    $('#employeesCalendar').fullCalendar({
+                    themeSystem: 'bootstrap4',
+                    defaultView: 'agendaWeek',
+                    firstDay: 1,
+                    allDaySlot: false,
+                    slotEventOverlap: true,
+                    columnHeaderFormat: 'ddd M.D YYYY',
+                    header: {
+                      left: 'prev,next',
+                      center: 'title',
+                      right: 'month, agendaWeek, agendaDay'
+                    },
+                    minTime:  "6:00:00",
+                    maxTime: "24:00:00",
+                    events: eventData,
+                    eventLimit: true,
+                    selectable:true,
+                    selectHelper: false,
+                    editable: false,
+                  });
+            
+                        updateStatusCard();
+            
+                        let managersCalendar = document.querySelector('#managersCalendar');
+            
+                        if(managersCalendar){
+                            let headerDays = Array.from(document.querySelectorAll(UISelectors.dayHeader));
+                    
+                            headerDays.forEach(day=>{
+                                let date = day.getAttribute('data-date');
 
-                        let previousWeekBtn = document.querySelector(UISelectors.prevWeek)
-                        if(previousWeekBtn) {
-                            previousWeekBtn.addEventListener('click', appendAddShiftBtns);
+                                let addShiftBtn = document.createElement('button');
+                                    addShiftBtn.classList = 'btn btn-secondary btn-block addShiftBtn';
+                                    addShiftBtn.innerHTML = 'Add Shift';
+                                    addShiftBtn.setAttribute('data-date', date);
+                                day.appendChild(addShiftBtn);
+                            });    
+            
+                            let nextWeekBtn = document.querySelector(UISelectors.nextWeek);
+                            if(nextWeekBtn) {
+                                nextWeekBtn.addEventListener('click', displayManagerCalander);
+                            }
+
+                            let previousWeekBtn = document.querySelector(UISelectors.prevWeek);
+                            if(previousWeekBtn) {
+                                previousWeekBtn.addEventListener('click', displayManagerCalander);
+                            }
+
+                            let agendaWeekBtn = document.querySelector(UISelectors.agendaWeek);
+                            if(agendaWeekBtn) {
+                                agendaWeekBtn.addEventListener('click', displayManagerCalander);
+                            }
+
+                            let agendaDayBtn = document.querySelector(UISelectors.agendaDay);
+                            if(agendaDayBtn) {
+                                agendaDayBtn.addEventListener('click', displayManagerCalander);
+                            }
+                            
                         }
 
                         let tableBordered = document.querySelector(UISelectors.tableBordered);
@@ -257,9 +309,48 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                         }   
 
           });
-        
-        
-        
+
+    }
+    
+    const updateStatusCard = function(){
+
+            fetch(`/dashboard/schedules.json`)
+              .then(function(response) {
+                return response.json();
+            }).then(function(scheduleData) {
+                let managerCalendar = document.querySelector('#managersCalendar'),
+                    employeeCalendar = document.querySelector('#employeesCalendar');
+                
+                if(managerCalendar || employeeCalendar){
+                    
+                    let calendarStartDate = document.querySelector('.fc-axis').nextElementSibling.getAttribute('data-date');
+                    
+                    scheduleData.forEach(schedule => {
+
+                        if(schedule.scheduleStart === calendarStartDate && schedule.scheduleStatus === "published"){
+
+                            document.querySelector('.commentCard').style.display = 'block';
+                            document.querySelector('.managerComments').innerHTML = schedule.managerComments;
+                            document.querySelector('#comments').value = '';
+                            document.querySelector('#comments').disabled = true;
+                            document.querySelector(UISelectors.updateStatus).disabled = true;
+                            document.querySelector('#publishedStatus').checked = true;
+                        } else {
+                            document.querySelector('.commentCard').style.display = 'none';
+                            document.querySelector('.managerComments').innerHTML = '';
+                            document.querySelector('#comments').value = '';
+                            document.querySelector('#comments').disabled = false;
+                            document.querySelector(UISelectors.updateStatus).disabled = false;
+                            document.querySelector('#draftStatus').checked = true;
+                        }
+                    })    
+                }
+                
+                
+            }).catch(err =>{
+                console.log(err);
+                return;
+            });
         
     }
     
@@ -292,7 +383,8 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
     //Public Methods
     return {
         init: () => {
-            appendAddShiftBtns();
+            displayManagerCalander();
+            
             loadEventListeners();
             appendTimeIntervals('00:00', '24:00');
             
@@ -308,4 +400,6 @@ AppCtrl.init();
 //data tables function
 $(document).ready( function () {
     $('#employeeTable').DataTable();
-} );
+});
+
+

@@ -2,12 +2,25 @@ const express = require('express');
 const router = express.Router();
 const path = require("path");
 const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
+const Nexmo = require('nexmo');
+const socketio = require('socket.io');
+const _ = require('lodash');
+const keys = require('../config/keys');
 const nodeMailer = require("nodemailer");
 
 const db = require("../models");
 
 router.use(express.static(path.join(__dirname, '../public')));
 
+/********************INITIALIZE NEXMO****************/
+const nexmo = new Nexmo({
+    apiKey: keys.nexmo.nexmoKey,
+    apiSecret: keys.nexmo.nexmoSecret
+}, {debug: true});
+
+
+
+/*******************DASHBOARD GET ROUTES***********************/
 router.get("/", ensureAuthenticated, function(req, res) {
     
     res.render("index/dashboard");
@@ -22,6 +35,15 @@ router.get('/shifts.json', (req, res)=>{
     });
 });
 
+
+router.get('/schedules.json', (req, res)=>{
+    db.Schedule.findAll({}).then(function(scheduleData) {
+        
+        let scheduleDataArray = scheduleData.map(data => data.dataValues);
+
+        res.json(scheduleDataArray);
+    });
+});
 
 router.get('/add-shift/:date', ensureAuthenticated, function(req,res) {
     let date = req.params.date;
@@ -51,16 +73,75 @@ router.get('/add-shift/:date', ensureAuthenticated, function(req,res) {
     });
 });
 
+/*******************DASHBOARD POST ROUTES***********************/
+router.post('/', (req, res)=>{
+    //Save schedule with status of published and up all events within that schedule to the status of published
+    db.Schedule.create(req.body).then(savedSchedule => {
+        //FIND ALL EVENTS TO SEND OUT TEXT MESSAGE
+        db.Event.findAll({
+            where:{
+                shiftStatus: 'draft'
+            }
+        }).then(foundEvents =>{
+            
+            let foundEventsArray = foundEvents.map(data => data.dataValues);
+                
+            let employeeShifts = _.mapValues(_.groupBy(foundEventsArray, 'title'));
+                
+//                var x;
+//                for (x in employeeShifts) {
+//                    let employeeSchedule = employeeShifts[x].map(y=>{
+//                        return {
+//                            title: y.title,
+//                            start: y.start,
+//                            end: y.end
+//                        }
+//                    });
+//                    
+//                    console.log(employeeSchedule);
+//                }
+
+            
+        }).catch(err =>{
+            console.log(err);
+            return;
+        });
+        
+        //UPDATE ALL EVENTS TO PUBLISHED STATUS
+        db.Event.update({
+            shiftStatus: req.body.scheduleStatus
+        }, {
+            where: {
+                shiftStatus: 'draft'
+            }
+        }).then(function (updatedEventStatus){
+            res.json({
+                managerComments: req.body.managerComments
+            })
+        }).catch(err =>{
+            console.log(err);
+            return;
+        });
+ 
+    }).catch(err => {
+        console.log(err);
+        return;
+    });
+    
+
+});
+
+
 router.post('/add-shift/:date', ensureAuthenticated, function(req, res) {
     let color,
         htmlClass;
     
     if(req.query.department === 'FOH'){
         color = '#f7992e';
-        htmlClass = 'FOHShift';
+        htmlClass = 'FOHDraftShift';
     }else{
         color = '#2e7bf7';
-        htmlClass = 'FOHShift';
+        htmlClass = 'BOHDraftShift';
     }
     
     db.User.findOne({    
