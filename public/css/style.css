@@ -90,11 +90,10 @@ option {
     background-color: white;
 }
 
-#headlines-centered {
+#headlines-centered{
     text-align: center;
     padding: 20px;
 }
-
 #sub-headlinemargin {
     text-align: center;
 }
@@ -107,30 +106,22 @@ option {
         height: auto;
         justify-content: right;
 }
-
 #pricing-background {
     background-color: lightblue;
 }
 .footer-background {
     background-color:blueviolet;
 }
-
-#footer-location {
+#footer-location{
     bottom: 0px;
     width: 1000px;
     height: 50px;
 }
-
-
-#footer-location{
-    bottom: 0px;
-    width: 1000px;
-    height: 100px;
+#footer-verbiage {
+    border-top: 10px;
 }
-
 #footer-rights{
-
-    text-align: right;
+    text-justify: right;
 }
 .publishStatusBtn {
     font-weight: bold;
@@ -142,30 +133,6 @@ h7 {
     text-align: right;
 }
 
-.modalcontent {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #e6e6e6;
-    width: 30%;
-    height: 35%;
-    padding: 20px;
-    border: solid white;
-    border-width: 4px;
-    border-radius: 10px;
-}
 
-#modal {
-    display: none;
-    position: fixed;
-    font-family: Arial, Helvetica, sans-serif;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 99999;
-    height: 100%;
-    width: 100%;
-}
 
 
