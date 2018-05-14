@@ -19,38 +19,46 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div id='calendar'></div>
+                   {{#ifCond user.isAdmin '||' user.isManager}}
+                        <div id='managersCalendar'></div>
+                    {{else}}
+                        <div id='employeesCalendar'></div>
+                    {{/ifCond}}
                 </div>
             </div>   
        </div>
        <div class="col-lg-3">
+           {{#ifCond user.isAdmin '||' user.isManager}}
             <div class="card bg-light mb-3">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5>Schedule Status</h5>  
                 </div>
                 <div class="card-body">
-                   <form action="">
+                   <form>
                         <div class="form-check">
-                            <input class="form-check-input mt-2" type="radio" name="scheduleStatus" id="draftStatus" value="false" checked>
+                            <input class="form-check-input mt-2" type="radio" name="scheduleStatus" id="draftStatus" value="draft" checked>
                             <label class="form-check-label" for="draftStatus"><button class="btn btn-secondary draftStatusBtn btn-sm mb-3" disabled>Draft Status</button></label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input mt-2" type="radio" name="scheduleStatus" id="publishedStatus" value="true">
+                            <input class="form-check-input mt-2" type="radio" name="scheduleStatus" id="publishedStatus" value="published">
                             <label class="form-check-label" for="publishedStatus"><button class="btn btn-success publishStatusBtn btn-sm mb-3" disabled>Published Status</button></label>
                         </div>
                         <div class="form-group">
                             <label for="comment">Manager Comments</label>
                             <textarea name="comments" id="comments" cols="10" rows="4" class="form-control"></textarea>
                         </div>
-                        <button class="btn btn-primary btn-block" type="submit">Update Status</button>    
+                        <button class="btn btn-primary btn-block updateStatus" type="submit" disabled>Update Status</button>    
                    </form> 
                 </div>
             </div>
-            <div class="card">
+            {{/ifCond}}
+
+            <div class="card commentCard" style="display: none">
                 <div class="card-body text-center">
-                    <h4>Dynamically Generated Manager Comments Will Show Here</h4>
+                    <h4>Manager Comments:</h4>
+                    <p class="managerComments"></p>
                 </div>
-            </div>   
+            </div> 
        </div> 
    </div>    
 </div>

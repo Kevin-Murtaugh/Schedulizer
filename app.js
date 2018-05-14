@@ -10,11 +10,13 @@ const session = require("express-session");
 const passport = require("passport");
 const flash = require('connect-flash');
 const nodeMailer = require("nodemailer");
+const Nexmo = require('nexmo');
+const socketio = require('socket.io');
 const app = express();
 
 //Handlebars Helpers
 const {
-    select
+    ifCond
 } = require('./helpers/hbs');
 
 
@@ -31,7 +33,7 @@ const auth = require('./routes/auth');
 const employee = require('./routes/employee');
 const dashboard = require("./routes/dashboard");
 const settings = require("./routes/settings");
-
+const account = require('./routes/account');
 const features = require("./routes/features");
 const pricing = require("./routes/pricing");
 
@@ -39,7 +41,7 @@ const pricing = require("./routes/pricing");
 //Handlebars Middleware
 app.engine('handlebars', exphbs({
     helpers: {
-        select: select
+        ifCond: ifCond
     },
     defaultLayout: 'main'
 }));
@@ -81,13 +83,14 @@ app.use((req, res, next)=>{
 app.use(express.static(__dirname + '/public'));
 
 
+
 /**********************USE ROUTES**************************/
 app.use('/', index);
 app.use('/auth', auth);
 app.use('/employee' , employee);
 app.use('/dashboard', dashboard);
 app.use('/settings', settings);
-
+app.use('/account', account);
 app.use('/features', features);
 app.use('/pricing', pricing);
 
@@ -110,8 +113,4 @@ app.use((error, req, res, next)=>{
 const PORT = process.env.port || 8080;
 
 
-db.sequelize.sync().then(function() {
-    app.listen(PORT, function() {
-      console.log("App listening on PORT " + PORT);
-    });
-});
+db.sequelize.sync().then(()=> app.listen(PORT, ()=>  console.log("App listening on PORT " + PORT)));

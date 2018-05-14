@@ -3,34 +3,57 @@
          <div class="card mt-10">
              <div class="card-body">
                  <div class="">
-                      <table id="employeeTable" class="display" style="width:100%">
-                           <thead>
-                              <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone Number</th>
-                                <th>Department</th>
-                                <th>Hourly Pay</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <!--this is where we need to get the information from each user-->
-                             <tbody>
-                                 {{#each users}}
-                              <tr>
-                                 <td>{{this.firstName}} {{this.lastName}}</td>
-                                 <td>{{this.email}}</td>
-                                 <td>{{this.phoneNumber}}</td>
-                                 <td>{{this.department}}</td>
-                                  <td>{{this.hourlyPay}}</td>
-                                  <!--add link to employee id so when its clicked -->
-                                  <td><a href="/employee/add/{{this.id}}" class="btn btn-info btn-lg">
-                                        <span class="glyphicon glyphicon-pencil"></span> Edit 
-                                      </a>
-                                  </td>
-                             </tr>
-                             {{/each}}
-                          </tbody>
+                      <table id="employeeTable" class="display text-center" style="width:100%">
+                          {{#ifCond user.isAdmin '||' user.isManager}}
+                               <thead>
+                                  <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Department</th>
+                                    <th>Hourly Pay</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <!--this is where we need to get the information from each user-->
+                                 <tbody>
+                                     {{#each users}}
+                                          <tr>
+                                             <td>{{this.firstName}} {{this.lastName}}</td>
+                                             <td>{{this.email}}</td>
+                                             <td>{{this.phoneNumber}}</td>
+                                             <td>{{this.department}}</td>
+                                              <td>{{this.hourlyPay}}</td>
+                                              <!--add link to employee id so when its clicked -->
+
+                                              <td><a href="/employee/add/{{this.id}}" class="btn btn-info btn-lg">
+                                                    <span class="glyphicon glyphicon-pencil"></span> Edit 
+                                                  </a>
+                                              </td>
+                                         </tr>
+                                 {{/each}}
+                              </tbody>
+                          {{else}}
+                                  <thead>
+                                      <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone Number</th>
+                                        <th>Department</th>
+                                    </tr>
+                                    </thead>
+                                    <!--this is where we need to get the information from each user-->
+                                     <tbody>
+                                         {{#each users}}
+                                      <tr>
+                                         <td>{{this.firstName}} {{this.lastName}}</td>
+                                         <td>{{this.email}}</td>
+                                         <td>{{this.phoneNumber}}</td>
+                                         <td>{{this.department}}</td>
+                                     </tr>
+                                     {{/each}}
+                                  </tbody>
+                          {{/ifCond}}
                   </table>
                 </div>
             </div>
