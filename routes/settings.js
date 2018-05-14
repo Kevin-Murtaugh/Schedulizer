@@ -9,22 +9,24 @@ router.use(express.static(path.join(__dirname, '../public')));
 
 //Settings route
 router.get('/', ensureAuthenticated, (req, res) => {
-    let userID = req.user.dataValues.id;
-    
-    db.Settings.findOne({    
-          where: {
-            id: userID
-          }
-        }).then(function(userSettings) {
-            let settings = userSettings.dataValues;
-           if(settings){
-                res.render('settings/settings');   
-           } else {
-               res.render('settings/settings');
-           }
-               
-           
-        });
+    res.render('settings/settings');  
+//    let userID = req.user.dataValues.id;
+//    console.log(userID)
+//    db.Settings.findOne({    
+//          where: {
+//            id: userID
+//          }
+//        }).then(function(userSettings) {
+//            let settings = userSettings.dataValues;
+//            console.log()
+//           if(settings){
+//                res.render('settings/settings');   
+//           } else {
+//               res.render('settings/settings');
+//           }
+//               
+//           
+//        });
 });
 
 

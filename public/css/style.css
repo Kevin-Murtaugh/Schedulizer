@@ -21,6 +21,11 @@ option {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
+.form-control-file, .form-control-range {
+    display: block;
+    width: 77%;
+}
+
 
 /********************NAVBAR********************/
 .navbar-img__logo{
@@ -84,6 +89,28 @@ option {
     );
     padding-left: 70px;
     padding-right: 70px;
+}
+
+.FOHDraftShift{
+    color: black!important;
+    background: repeating-linear-gradient(
+      45deg,
+      #f7992e,
+      #f7992e 10px,
+      #fac17f 10px,
+      #fac17f 20px
+    );
+}
+
+.BOHDraftShift{
+    color: black!important;
+    background: repeating-linear-gradient(
+      45deg,
+      #2e7bf7,
+      #2e7bf7 10px,
+      #7faefa 10px,
+      #7faefa 20px
+    );
 }
 
 #features-background {
@@ -174,6 +201,24 @@ h7 {
     border-radius: 10px;
 }
 
+
+/***********intlTelInput**********/
+span.country-name {
+    color: black;
+}
+
+.intl-tel-input.allow-dropdown {
+    width: 100%;
+}
+
+.iti-flag {background-image: url("../img/flags.png");}
+ 
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  .iti-flag {background-image: url("../img/flags@2x.png");}
+}
+
+
+
 #modal {
     display: none;
     position: fixed;
@@ -243,6 +288,7 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: #45a049;
 }
+
 
 .column {
     float: left;

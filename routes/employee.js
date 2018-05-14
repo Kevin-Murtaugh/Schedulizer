@@ -11,11 +11,16 @@ const path = require("path");
 const db = require("../models");
 
 router.use(express.static(path.join(__dirname, '../public')));
+
 /***********************LOCAL EMPLOYEE ROUTES*******************************/
 //Employee routes
 router.get('/view', ensureAuthenticated, (req, res) => {
     //sequlizer for find all users to display
-    db.User.findAll({}).then(function (dbUser) {
+    db.User.findAll({
+        where: {
+            isAdmin: false
+        }
+    }).then(function (dbUser) {
         let foundUsers = [];
         dbUser.forEach(user => {
             let viewUser = {
@@ -23,7 +28,7 @@ router.get('/view', ensureAuthenticated, (req, res) => {
                 'firstName': user.firstName,
                 'lastName': user.lastName,
                 'email': user.email,
-                'phoneNumber': user.phoneNumber,
+                'phoneNumber': user.full_phone,
                 'department': user.department,
                 'hourlyPay': user.hourlyPay
             }
@@ -49,7 +54,7 @@ router.get('/add/:id', ensureAuthenticated, (req, res) => {
             'firstName': dbUser.dataValues.firstName,
             'lastName': dbUser.dataValues.lastName,
             'email': dbUser.dataValues.email,
-            'phoneNumber': dbUser.dataValues.phoneNumber,
+            'phoneNumber': dbUser.dataValues.full_phone,
             'department': dbUser.dataValues.department,
             'hourlyPay': dbUser.dataValues.hourlyPay,
             'department': dbUser.dataValues.department
@@ -64,22 +69,54 @@ router.get('/add/:id', ensureAuthenticated, (req, res) => {
 
 //PUT method does not work, trying to get the values in mySQL to uodate when update button clicked
 router.put('/add/:id', (req, res) => {
+    
     db.User.findOne({
         where: {
             id: req.params.id
         }
     }).then(function (dbUser) {
-        dbUser.update({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            phoneNumber: req.body.phoneNumber,
-            hourlyPay: req.body.hourlyPay,
-            isManager: req.body.isManager,
-            department: req.body.department
-        }).then(function (update){
-            res.redirect('/employee/view');
-        });
+        let hashedPassword;
+        if(req.body.password === ''){
+            hashedPassword = dbUser.dataValues.password;
+            
+                db.User.update({
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    password: hashedPassword,
+                    email: req.body.email,
+                    phoneNumber: req.body.full_phone,
+                    hourlyPay: req.body.hourlyPay,
+                    isManager: req.body.isManager,
+                    department: req.body.department
+                }).then(function (update){
+                    res.redirect('/employee/view');
+                });
+            
+        }else {
+            
+            let insecurePass = req.body.password;
+            
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(insecurePass, salt, (err, hash) => {
+                    if (err) throw err;
+                    
+                    db.User.update({
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+                        password: hash,
+                        email: req.body.email,
+                        phoneNumber: req.body.full_phone,
+                        hourlyPay: req.body.hourlyPay,
+                        isManager: req.body.isManager,
+                        department: req.body.department
+                    }).then(function (update){
+                        res.redirect('/employee/view');
+                    });
+                    
+                });
+            });
+        }
+
     });
 });
 
@@ -98,7 +135,7 @@ router.post('/add', (req, res) => {
                 lastName: req.body.lastName,
                 email: req.body.email,
                 password: hash,
-                phoneNumber: req.body.phoneNumber,
+                phoneNumber: req.body.full_phone,
                 hourlyPay: req.body.hourlyPay,
                 isManager: req.body.isManager,
                 department: req.body.department
