@@ -33,9 +33,13 @@ const auth = require('./routes/auth');
 const employee = require('./routes/employee');
 const dashboard = require("./routes/dashboard");
 const settings = require("./routes/settings");
-const account = require('./routes/account');
 const features = require("./routes/features");
 const pricing = require("./routes/pricing");
+const footer = require("./routes/footer");
+const reports = require("./routes/reports");
+const account = require('./routes/account');
+
+
 
 
 /******************-MIDDLE WARE***********************/
@@ -91,9 +95,11 @@ app.use('/auth', auth);
 app.use('/employee' , employee);
 app.use('/dashboard', dashboard);
 app.use('/settings', settings);
+app.use('/pricing', pricing);
+app.use('/_footer', footer);
+app.use('/reports', reports);
 app.use('/account', account);
 app.use('/features', features);
-app.use('/pricing', pricing);
 
 
 
