@@ -1,6 +1,3 @@
-
-
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top px-5">
         <a class="navbar-brand" href="/"><img src="./img/calendar.png" alt="" class="navbar-img__logo mr-2">Schedulizer</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,6 +26,7 @@
                         <a class="dropdown-item" href="/account">Your Account</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/auth/logout">Sign Out</a>
+                        <a class="dropdown-item" href="#" id="sendNewsLetter">Send News Letter</a>
                     </div>    
                 </li>
             </ul>
@@ -54,3 +52,21 @@
     </div>
 </nav>
 
+<div id="adminNewsLetter"> 
+    <div class="adminModalContent">
+        <div class ="contactContainer">
+            <div style="text-align:center">
+                <h2>Send your news letter</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="dashboard" method="post">
+                        <label for="subject"><strong>Message to news letter subscribers</strong></label>
+                        <textarea id="subject" name="subject" placeholder="Write something.." style="height:300px"></textarea>
+                        <input type="submit" value="Submit" id="adminNewsLtrBtn">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

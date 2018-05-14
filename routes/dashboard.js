@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require("path");
 const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
+const nodeMailer = require("nodemailer");
 
 const db = require("../models");
 
@@ -91,6 +92,48 @@ router.post('/add-shift/:date', ensureAuthenticated, function(req, res) {
 
            
         });
+
 });
+
+router.post("/dashboard", (req, res) => {
+    console.log(req.body);
+    let adminMessage = req.body.subject;
+      /******** Code below will be used to send message to all news letter users *********/
+      let newsLetterUsers = db.newsLetter.findAll({
+        attributes: ['email']
+    }).then(function(users) {
+        // looping over database and grabbing email info for registered news letter users.
+        users.forEach(user => {
+            // console.log(user.dataValues.email);
+            let allSubscribers = user.dataValues.email;
+            var transporter = nodeMailer.createTransport({
+                service: 'gmail',
+                auth: {
+                user: 'SchedulizerMail@gmail.com',
+                pass: 'Default123'
+                }
+            });
+            
+            
+            var mailOptions = {
+                from: 'Schedulizer <SchedulizerMail@gmail.com>',
+                to: allSubscribers,
+                subject: 'Update from Schedulizer',
+                text: adminMessage
+            }
+            
+            
+            transporter.sendMail(mailOptions, function(err, res) {
+                if(err) {
+                    console.log("Error");
+                } else {
+                    console.log("Email Sent");
+                }
+            });
+        });
+    });
+
+    res.redirect("/dashboard");
+})
 
 module.exports = router;

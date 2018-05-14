@@ -45,15 +45,6 @@ router.post("/", (req, res) => {
         //console.log(userEmail);
     });
 
-    /******** Code below will be used to send message to all news letter users *********/
-    let newsLetterUsers = db.newsLetter.findAll({
-        attributes: ['email']
-    }).then(function(users) {
-        // looping over database and grabbing email info for registered news letter users.
-        users.forEach(user => {
-            // console.log(user.dataValues.email);
-        });
-    });
 });
 
 
