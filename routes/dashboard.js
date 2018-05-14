@@ -88,8 +88,6 @@ router.post('/add-shift/:date', ensureAuthenticated, function(req, res) {
                     console.log(err);
                     return;
                 });
-
-           
         });
 });
 
