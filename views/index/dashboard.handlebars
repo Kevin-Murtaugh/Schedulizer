@@ -6,20 +6,6 @@
                     <div class="col-md-3">
                         <h5>Employee Schedule</h5> 
                     </div>
-<!--
-                    <div class="col-md-7">
-                        <div class="form-group row mb-0">
-                            <label for="department" class="col-sm-3 col-form-label">Department</label>
-                            <div class="col-sm-9">
-                                <select class="form-control" id="departmentSelect">
-                                    <option>Select Department</option>
-                                    <option value="BOH">Back of House</option>
-                                    <option value="FOH">Front of House</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
--->
                 </div>
                 <div class="card-body">
                    {{#ifCond user.isAdmin '||' user.isManager}}
@@ -28,6 +14,8 @@
                         <div id='employeesCalendar'></div>
                     {{/ifCond}}
                 </div>
+                <div class="loader"></div>
+                <div class="card-after"></div>
             </div>   
        </div>
        <div class="col-lg-3">
@@ -53,6 +41,8 @@
                         <button class="btn btn-primary btn-block updateStatus" type="submit" disabled>Update Status</button>    
                    </form> 
                 </div>
+                <div class="loader schedStatLoader"></div>
+                <div class="card-after"></div>
             </div>
             {{/ifCond}}
 
