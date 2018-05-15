@@ -13,16 +13,19 @@ router.get('/', (req, res) => {
         eventUser.forEach(user => {
             let userStart = user.start.split(" ");
             let userEnd = user.end.split(" ");
-            var start = moment(userStart[1], "HH:mm");
-            var end = moment(userEnd[1], "HH:mm");
-            var duration = moment.duration(end.diff(start));
-            var hours = parseInt(duration.asHours());
-            let userReport = {
-                'id': user.userId,
-                'name': user.Name,
-                'userHours': hours
-            }
-            scheduledUsers.push(userReport);
+            let start = moment(userStart[1], "HH:mm");
+            let end = moment(userEnd[1], "HH:mm");
+            let duration = moment.duration(end.diff(start));
+            let userHours = parseInt(duration.asHours());
+            let totalHours = 0;
+            if(user.userId) {
+                totalHours += userHours
+                let userReport = {
+                    'id': user.userId,
+                    'name': user.title,
+                    'userHours': totalHours
+                } 
+            } 
         });
         console.log(scheduledUsers);
     });
