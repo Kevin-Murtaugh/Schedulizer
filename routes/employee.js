@@ -44,6 +44,7 @@ router.get('/view', ensureAuthenticated, (req, res) => {
 //render view handlebar
 
 router.get('/add/:id', ensureAuthenticated, (req, res) => {
+    
     db.User.findOne({
         where: {
             id: req.params.id
@@ -69,8 +70,8 @@ router.get('/add/:id', ensureAuthenticated, (req, res) => {
 });
 
 //PUT method does not work, trying to get the values in mySQL to uodate when update button clicked
-router.put('/add/:id', (req, res) => {
-    
+router.put('/add/:id', ensureAuthenticated,(req, res) => {
+
     db.User.findOne({
         where: {
             id: req.params.id
@@ -79,8 +80,8 @@ router.put('/add/:id', (req, res) => {
         let hashedPassword;
         if(req.body.password === ''){
             hashedPassword = dbUser.dataValues.password;
-            
-                db.User.update({
+                
+                let updateUser = {
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     password: hashedPassword,
@@ -89,6 +90,11 @@ router.put('/add/:id', (req, res) => {
                     hourlyPay: req.body.hourlyPay,
                     isManager: req.body.isManager,
                     department: req.body.department
+                };
+                db.User.update(updateUser, {
+                    where: {
+                        id: req.params.id
+                    }
                 }).then(function (update){
                     res.redirect('/employee/view');
                 });
@@ -100,8 +106,7 @@ router.put('/add/:id', (req, res) => {
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(insecurePass, salt, (err, hash) => {
                     if (err) throw err;
-                    
-                    db.User.update({
+                    let updateUser = {
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
                         password: hash,
@@ -110,6 +115,11 @@ router.put('/add/:id', (req, res) => {
                         hourlyPay: req.body.hourlyPay,
                         isManager: req.body.isManager,
                         department: req.body.department
+                    };
+                    db.User.update(updateUser, {
+                        where:{
+                            id: req.params.id
+                        }
                     }).then(function (update){
                         res.redirect('/employee/view');
                     });
@@ -153,7 +163,7 @@ router.post('/add', (req, res) => {
     });
 });
 //delete method to remove users from DB
-router.delete('/add/:id', function(req, res){
+router.delete('/add/:id', ensureAuthenticated, function(req, res){
     console.log("destroy method");
     db.User.destroy({
       where: {

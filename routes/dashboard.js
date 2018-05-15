@@ -7,6 +7,7 @@ const _ = require('lodash');
 const keys = require('../config/keys');
 const nodeMailer = require("nodemailer");
 const twilio = require('twilio');
+const moment = require('moment');
 
 
 const db = require("../models");
@@ -85,11 +86,13 @@ router.post('/', (req, res)=>{
                     let employeeID = employeeShifts[x][0].userId;
                     let shiftArray = employeeShifts[x];
                     let shiftMessagesArray = shiftArray.map(shift =>{
-                       let message = `Shift Start: ${shift.start} - Shift End: ${shift.end}`;
+                        let shiftStart = moment(new Date(shift.start)).format("ddd MMM, Do hh:mm a");
+                        let shiftEnd = moment(new Date(shift.end)).format("hh:mm a");
+                        let message = `${shiftStart} -  ${shiftEnd},\n`;
                         return message;
                     });
                     
-                    let initialSalutation = `I was running into a throughput error so I am trying again. text me if it works. Hello ${x}, I hope you are having a great day! Your schedule for this upcoming week is as follows:`;
+                    let initialSalutation = `ManagerComments: ${req.body.managerComments} Sheduled Shifts:\n`;
                     shiftMessagesArray.unshift(initialSalutation);
                     let finalMessage = shiftMessagesArray.join(' ');
                     

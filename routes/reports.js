@@ -7,7 +7,7 @@ const moment = require('moment');
 const db = require("../models");
 
 
-router.get('/', (req, res) => {
+router.get('/', ensureAuthenticated, (req, res) => {
     let scheduledUsers = [];
     db.Event.findAll({}).then(function(eventUser) {
         eventUser.forEach(user => {

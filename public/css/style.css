@@ -17,6 +17,7 @@ input[type=text], select, textarea {
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
+    position: relative;
 }
 
 .card:hover {
@@ -78,7 +79,7 @@ input[type=text], select, textarea {
 
 .lp__cta-newsletter {
     position: relative;
-    bottom: 0;
+    bottom: 20px;
     width: 100%;
 }
 
@@ -165,6 +166,49 @@ input[type=text], select, textarea {
 .login-container {
     height: 100%;
 }
+
+.card-after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background: rgba(0, 0, 0, .6);
+    z-index: 9;
+}
+
+.loader {
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+    border-top: 5px solid #3498db;
+    width: 75px;
+    height: 75px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    display:none;
+    transform: translate(-50%, -50%);
+}
+
+.schedStatLoader{
+    left: 35%;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -210,6 +254,9 @@ h7 {
     text-justify: right;
 }
 
+.fc-license-message {
+    display: none;
+}
 
 
 .modalcontent {
