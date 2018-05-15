@@ -9,7 +9,22 @@ module.exports = function(sequelize, DataTypes) {
         firstName: {
             type: DataTypes.STRING
         },
-            lastName: {
+        lastName: {
+            type: DataTypes.STRING
+        },
+        businessName: {
+            type: DataTypes.STRING
+        },
+        address: {
+            type: DataTypes.STRING
+        },
+        city: {
+            type: DataTypes.STRING
+        },
+        state: {
+            type: DataTypes.STRING
+        },
+        zip: {
             type: DataTypes.STRING
         },
         email: { 

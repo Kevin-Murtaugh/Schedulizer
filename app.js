@@ -10,7 +10,6 @@ const session = require("express-session");
 const passport = require("passport");
 const flash = require('connect-flash');
 const nodeMailer = require("nodemailer");
-const Nexmo = require('nexmo');
 const socketio = require('socket.io');
 const moment = require('moment');
 const app = express();
@@ -38,8 +37,6 @@ const features = require("./routes/features");
 const pricing = require("./routes/pricing");
 const reports = require("./routes/reports");
 const account = require('./routes/account');
-
-
 
 
 /******************-MIDDLE WARE***********************/
@@ -87,8 +84,6 @@ app.use((req, res, next)=>{
 // Static directory
 app.use(express.static(__dirname + '/public'));
 
-
-
 /**********************USE ROUTES**************************/
 app.use('/', index);
 app.use('/auth', auth);
@@ -99,8 +94,6 @@ app.use('/pricing', pricing);
 app.use('/reports', reports);
 app.use('/account', account);
 app.use('/features', features);
-
-
 
 app.use((req, res, next)=>{
     const error = new Error('Not Found');
