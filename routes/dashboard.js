@@ -2,23 +2,16 @@ const express = require('express');
 const router = express.Router();
 const path = require("path");
 const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
-const Nexmo = require('nexmo');
 const socketio = require('socket.io');
 const _ = require('lodash');
 const keys = require('../config/keys');
 const nodeMailer = require("nodemailer");
+const twilio = require('twilio');
+
 
 const db = require("../models");
 
 router.use(express.static(path.join(__dirname, '../public')));
-
-/********************INITIALIZE NEXMO****************/
-const nexmo = new Nexmo({
-    apiKey: keys.nexmo.nexmoKey,
-    apiSecret: keys.nexmo.nexmoSecret
-}, {debug: true});
-
-
 
 /*******************DASHBOARD GET ROUTES***********************/
 router.get("/", ensureAuthenticated, function(req, res) {
@@ -86,22 +79,49 @@ router.post('/', (req, res)=>{
             
             let foundEventsArray = foundEvents.map(data => data.dataValues);
                 
-            let employeeShifts = _.mapValues(_.groupBy(foundEventsArray, 'title'));
-                
-//                var x;
-//                for (x in employeeShifts) {
-//                    let employeeSchedule = employeeShifts[x].map(y=>{
-//                        return {
-//                            title: y.title,
-//                            start: y.start,
-//                            end: y.end
-//                        }
-//                    });
-//                    
-//                    console.log(employeeSchedule);
-//                }
+            let employeeShifts = _.mapValues(_.groupBy(foundEventsArray, 'title'),
+                elist => elist.map(employee => _.omit(employee, ['title', 'id', 'department', 'url', 'className', 'overlap', 'color', 'shiftStatus'])));
+                let scheduleLength = Object.keys(employeeShifts).length;
 
+                var x;
             
+                for (x in employeeShifts) {
+                    
+                    let employeeID = employeeShifts[x][0].userId;
+                    let shiftArray = employeeShifts[x];
+                    let shiftMessagesArray = shiftArray.map(shift =>{
+                       let message = `Shift Start: ${shift.start} - Shift End: ${shift.end}`;
+                        return message;
+                    });
+                    
+                    let initialSalutation = `I was running into a throughput error so I am trying again. text me if it works. Hello ${x}, I hope you are having a great day! Your schedule for this upcoming week is as follows:`;
+                    shiftMessagesArray.unshift(initialSalutation);
+                    let finalMessage = shiftMessagesArray.join(' ');
+                    
+                    db.User.findOne({
+                        where: {
+                            id: employeeID
+                        }
+                    }).then(foundEmployee => {
+
+                        let phoneNumber = foundEmployee.dataValues.phoneNumber;
+
+                        const client = new twilio(keys.twilio.accountSID, keys.twilio.authToken);
+
+                            client.messages.create({
+                                body: finalMessage,
+                                to: phoneNumber,  // Text this number
+                                from: '+14079882078' // From a valid Twilio number
+                            })
+                            .then((message) => console.log(message));
+                           
+
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    
+                }
+
         }).catch(err =>{
             console.log(err);
             return;

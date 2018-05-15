@@ -34,6 +34,186 @@ $("document").ready(function() {
 
 /******* END OF NODE MAILER********/
 
+/******************FORM VALIDATION****************/
+$(document).ready(function() {
+    $('#signinForm').formValidation({
+        framework: 'bootstrap4',
+        icon: {
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
+        },
+        fields: {
+            username: {
+                validators: {
+                    notEmpty: {
+                        message: 'The username is required'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 30,
+                        message: 'The username must be more than 6 and less than 30 characters long'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z0-9_]+$/,
+                        message: 'The username can only consist of alphabetical, number and underscore'
+                    }
+                }
+            },
+            password: {
+                validators: {
+                    notEmpty: {
+                        message: 'The password is required'
+                    }
+                }
+            }
+        }
+    });
+});
+
+$(document).ready(function() {
+    $('#emailForm').formValidation({
+        framework: 'bootstrap4',
+        icon: {
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
+        },
+        fields: {
+            email: {
+                validators: {
+                    emailAddress: {
+                        message: 'The value is not a valid email address'
+                    }
+                }
+            }
+        }
+    });
+});
+
+
+        
+
+
+
+
+$(document).ready(function() {
+    $('#registrationForm').formValidation({
+        framework: 'bootstrap4',
+        icon: {
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh'
+        },
+        fields: {
+            firstName: {
+                row: '.col-xs-4',
+                validators: {
+                    notEmpty: {
+                        message: 'The first name is required'
+                    }
+                }
+            },
+            lastName: {
+                row: '.col-xs-4',
+                validators: {
+                    notEmpty: {
+                        message: 'The last name is required'
+                    }
+                }
+            },
+            email: {
+                validators: {
+                    notEmpty: {
+                        message: 'The email address is required'
+                    },
+                    emailAddress: {
+                        message: 'The input is not a valid email address'
+                    }
+                }
+            },
+            password: {
+                validators: {
+                    notEmpty: {
+                        message: 'The password is required'
+                    },
+                    callback: {
+                        callback: function(value, validator, $field) {
+                            var password = $field.val();
+                            if (password == '') {
+                                return true;
+                            }
+
+                            var result  = zxcvbn(password),
+                                score   = result.score,
+                                message = result.feedback.warning || 'The password is weak';
+
+                            // Update the progress bar width and add alert class
+                            var $bar = $('#strengthBar');
+                            switch (score) {
+                                case 0:
+                                    $bar.attr('class', 'progress-bar bg-danger')
+                                        .css('width', '1%');
+                                    break;
+                                case 1:
+                                    $bar.attr('class', 'progress-bar bg-danger')
+                                        .css('width', '25%');
+                                    break;
+                                case 2:
+                                    $bar.attr('class', 'progress-bar bg-danger')
+                                        .css('width', '50%');
+                                    break;
+                                case 3:
+                                    $bar.attr('class', 'progress-bar bg-warning')
+                                        .css('width', '75%');
+                                    break;
+                                case 4:
+                                    $bar.attr('class', 'progress-bar bg-success')
+                                        .css('width', '100%');
+                                    break;
+                            }
+
+                            // We will treat the password as an invalid one if the score is less than 3
+                            if (score < 3) {
+                                return {
+                                    valid: false,
+                                    message: message
+                                }
+                            }
+
+                            return true;
+                        }
+                    }
+                }
+            },
+            passwordConfirm: {
+                validators: {
+                    identical: {
+                        field: 'password',
+                        message: 'The confirm password does not match the password'
+                    }
+                }
+            }
+        }
+    });
+});
+
+
+
+const usStates = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
+
+
+(function populateStateSelects(usStates){    
+    const statesSelect = Array.prototype.slice.call(document.querySelectorAll('.states'));
+    statesSelect.forEach(select=>{
+        usStates.forEach(state=>{
+            let option = document.createElement("option");
+            option.text = state;
+            option.value = state;
+            select.add(option);
+        });
+    });   
+})(usStates);
 
 
 //===============ITEM CONTROLLER==================
@@ -211,7 +391,7 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                     firstDay: 1,
                     allDaySlot: false,
                     slotEventOverlap: true,
-                    columnHeaderFormat: 'ddd M.D YYYY',
+                    columnHeaderFormat: 'ddd M.D YY',
                     header: {
                       left: 'prev,next',
                       center: 'title',
@@ -241,7 +421,7 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                     firstDay: 1,
                     allDaySlot: false,
                     slotEventOverlap: true,
-                    columnHeaderFormat: 'ddd M.D YYYY',
+                    columnHeaderFormat: 'ddd M.D YY',
                     header: {
                       left: 'prev,next',
                       center: 'title',

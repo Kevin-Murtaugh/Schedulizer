@@ -3,7 +3,9 @@ option {
     font-weight: bold;
 }
 
-
+input[type=text], select, textarea {
+    padding: .375rem .75rem!important;
+}
 
 
 /**************************BOOTSTRAP OVERRIDES*******************/
@@ -30,6 +32,18 @@ option {
     line-height: 7%;
     padding-top: 15px;
     font-size: 15px;
+}
+
+.btn-primary{
+    background-color: #1F3D7C;
+    color:white;
+    border: white;
+}
+
+.has-error .control-label,
+.has-error .help-block,
+.has-error .form-control-feedback {
+    color: red;
 }
 
 
@@ -76,6 +90,11 @@ option {
     background-color: white;
 }
 
+.ctaBtn{
+    background-color: #1F3D7C;
+    color:white;
+    border: white;
+}
 
 /******************************DASHBOARD LANDING PAGES**********************************/
 .dashboard-container {

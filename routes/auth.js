@@ -81,8 +81,14 @@ router.post('/register', (req, res) => {
             errors: errors,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
+            businessName: req.body.businessName,
+            address: req.body.address,
+            city: req.body.city,
+            state: req.body.state,
+            zip: req.body.zip,
             email: req.body.email,
             phoneNumber: req.body.full_phone
+            
         });
     } else {
         
@@ -100,6 +106,11 @@ router.post('/register', (req, res) => {
                     email_error: errors,
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
+                    businessName: req.body.businessName,
+                    address: req.body.address,
+                    city: req.body.city,
+                    state: req.body.state,
+                    zip: req.body.zip,
                     email: req.body.email,
                     phoneNumber: req.body.full_phone
                 });   
@@ -114,8 +125,15 @@ router.post('/register', (req, res) => {
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
                             email: req.body.email,
+                            businessName: req.body.businessName,
+                            address: req.body.address,
+                            city: req.body.city,
+                            state: req.body.state,
+                            zip: req.body.zip,
                             password: hash,
-                            phoneNumber: req.body.full_phone
+                            phoneNumber: req.body.full_phone,
+                            isAdmin: true,
+                            isManager: true
                         }
                             console.log(newUser);
                         db.User.create(newUser).then(function(user){
