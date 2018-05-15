@@ -25,6 +25,12 @@ option {
     display: block;
     width: 77%;
 }
+.footer-background{
+    height: 45px;
+    line-height: 7%;
+    padding-top: 15px;
+    font-size: 15px;
+}
 
 
 /********************NAVBAR********************/
@@ -173,7 +179,7 @@ html, body {
 }
 
 #footer-verbiage {
-    margin-top: 5px;
+    font-size: 8px;
 } */
 
 .publishStatusBtn {
