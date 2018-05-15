@@ -234,20 +234,20 @@ const UICtrl = (function(){
     const UISelectors = {
         //Buttons
         addShiftBtn: '.addShiftBtn',
-        agendaWeek: '.fc-agendaWeek-button',
-        agendaDay: '.fc-agendaDay-button',
+        agendaWeek: '.fc-timelineWeek-button',
+        agendaDay: '.fc-timelineDay-button',
         updateStatus: '.updateStatus',
         
         //Inputs
         timeInterval: '.timeInterval',
         
         //Selects
-        
+        departmentSelect: '#departmentSelect',
         
         //TextAreas
         
         //Calendar
-        dayHeader: '.fc-day-header',
+        dayHeader: '.fc-cell-content',
         nextWeek: '.fc-next-button',
         prevWeek: '.fc-prev-button',
         
@@ -360,138 +360,185 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
             });
         }
         
-        
-        
 
-        
-        /*----------------CHANGE Events-----------------*/
-        
+
     }
     
-    const displayManagerCalander = function(){
+
+    
+    const getCalendarData = function(selectedDepartment, departmentText){
         
         fetch(`/dashboard/shifts.json`)
           .then(function(response) {
             return response.json();
           })
           .then(function(eventData) {
-            
-            eventData.map(data => {     
-                data.start = moment(data.start, 'YYYY-MM-DD H:mm:ss').format();
-                data.end = moment(data.end, 'YYYY-MM-DD H:mm:ss').format();
-                if(data.shiftStatus == 'published'){
-                    data.className = '';
-                }
-            });
-                
-            
-                 $('#managersCalendar').fullCalendar({
-                    themeSystem: 'bootstrap4',
-                    defaultView: 'agendaWeek',
-                    firstDay: 1,
-                    allDaySlot: false,
-                    slotEventOverlap: true,
-                    columnHeaderFormat: 'ddd M.D YY',
-                    header: {
-                      left: 'prev,next',
-                      center: 'title',
-                      right: 'addEventButton, month, agendaWeek, agendaDay'
-                    },
-                    minTime:  "6:00:00",
-                    maxTime: "24:00:00",
-                    events: eventData,
-                    eventLimit: true,
-                    selectable:true,
-                    selectHelper: true,
-                    editable: true,
-                    customButtons: {
-                      addEventButton: {
-                        text: 'Add Employee',
-                        click: function() {
-                            location.href = `/employee/add`;  
-                        }
-                      }
-                    }
-                  });
-            
-            
-                    $('#employeesCalendar').fullCalendar({
-                    themeSystem: 'bootstrap4',
-                    defaultView: 'agendaWeek',
-                    firstDay: 1,
-                    allDaySlot: false,
-                    slotEventOverlap: true,
-                    columnHeaderFormat: 'ddd M.D YY',
-                    header: {
-                      left: 'prev,next',
-                      center: 'title',
-                      right: 'month, agendaWeek, agendaDay'
-                    },
-                    minTime:  "6:00:00",
-                    maxTime: "24:00:00",
-                    events: eventData,
-                    eventLimit: true,
-                    selectable:true,
-                    selectHelper: false,
-                    editable: false,
-                  });
-            
-                        updateStatusCard();
-            
-                        let managersCalendar = document.querySelector('#managersCalendar');
-            
-                        if(managersCalendar){
-                            let headerDays = Array.from(document.querySelectorAll(UISelectors.dayHeader));
-                    
-                            headerDays.forEach(day=>{
-                                let date = day.getAttribute('data-date');
 
-                                let addShiftBtn = document.createElement('button');
-                                    addShiftBtn.classList = 'btn btn-secondary btn-block addShiftBtn';
-                                    addShiftBtn.innerHTML = 'Add Shift';
-                                    addShiftBtn.setAttribute('data-date', date);
-                                day.appendChild(addShiftBtn);
-                            });    
-            
-                            let nextWeekBtn = document.querySelector(UISelectors.nextWeek);
-                            if(nextWeekBtn) {
-                                nextWeekBtn.addEventListener('click', displayManagerCalander);
+                        eventData.map(data => {     
+                            data.start = moment(data.start, 'YYYY-MM-DD H:mm:ss').format();
+                            data.end = moment(data.end, 'YYYY-MM-DD H:mm:ss').format();
+                            data['resourceId'] = data['userId'];
+                            delete data['userId'];
+                            if(data.shiftStatus == 'published'){
+                                data.className = '';
                             }
+                        });
+                        console.log(eventData);
+      
+                        let resources = eventData.map(event => {
 
-                            let previousWeekBtn = document.querySelector(UISelectors.prevWeek);
-                            if(previousWeekBtn) {
-                                previousWeekBtn.addEventListener('click', displayManagerCalander);
-                            }
-
-                            let agendaWeekBtn = document.querySelector(UISelectors.agendaWeek);
-                            if(agendaWeekBtn) {
-                                agendaWeekBtn.addEventListener('click', displayManagerCalander);
-                            }
-
-                            let agendaDayBtn = document.querySelector(UISelectors.agendaDay);
-                            if(agendaDayBtn) {
-                                agendaDayBtn.addEventListener('click', displayManagerCalander);
-                            }
-                            
-                        }
-
-                        let tableBordered = document.querySelector(UISelectors.tableBordered);
-                        if(tableBordered) {
-                            tableBordered.addEventListener('click', (e)=>{
-                                if(e.target.classList.contains('addShiftBtn')){
-                                    let date = e.target.getAttribute('data-date');
-                                    let department = document.querySelector('#departmentSelect');
-                                    department = department.options[department.selectedIndex].value;
-                                    location.href = `/dashboard/add-shift/${date}?department=${department}`;
+                                let department;
+                                if(event.department == 'BOH'){
+                                    department = 'Back of House';
+                                }else if(event.department == 'FOH'){
+                                    department = 'Front of House';
                                 }
+                                return {
+                                    id: event.resourceId,
+                                    title: event.title,
+                                    department: department
+                                }      
 
-                            });
-                        }   
+                        });
+                        console.log(resources);
+            
+                        drawCalendars(eventData, resources, departmentText);
+                        updateStatusCard();
+                        appendAddShiftBtn();
+                        calendarEventListeners();
+                                
+
+                                    
 
           });
 
     }
     
+    const appendAddShiftBtn = function(){
+        let headerDays = document.querySelectorAll('.fc-scroller-canvas')[1];
+            if(headerDays){
+                let daysArray = Array.from(headerDays.firstElementChild.firstElementChild.lastElementChild.firstElementChild.children);  
+                
+                if(daysArray.length === 7){
+                    daysArray.forEach(day=>{
+
+                        let date = day.getAttribute('data-date').split('T')[0];
+
+                        let addShiftBtn = document.createElement('button');
+                            addShiftBtn.classList = 'btn btn-secondary addShiftBtn btn-block';
+                            addShiftBtn.innerHTML = 'Add Shift';
+                            addShiftBtn.setAttribute('data-date', date);
+                        day.appendChild(addShiftBtn);
+                    });
+                }else {
+                    let date = daysArray[0].getAttribute('data-date').split('T')[0];
+                    
+                    let target = document.querySelector('.fc-right').firstElementChild;
+
+                    let addShiftBtn = document.createElement('button');
+                            addShiftBtn.classList = 'btn btn-secondary addShiftBtn btn-block';
+                            addShiftBtn.innerHTML = 'Add Shift';
+                            addShiftBtn.setAttribute('data-date', date);
+                        target.prepend(addShiftBtn);
+                }
+                      
+            }
+    }
+    
+    const calendarEventListeners = function(){
+        let nextWeekBtn = document.querySelector(UISelectors.nextWeek);
+            if(nextWeekBtn) {
+                nextWeekBtn.addEventListener('click', getCalendarData);
+            }
+
+            let previousWeekBtn = document.querySelector(UISelectors.prevWeek);
+            if(previousWeekBtn) {
+                previousWeekBtn.addEventListener('click', getCalendarData);
+            }
+
+            let agendaWeekBtn = document.querySelector(UISelectors.agendaWeek);
+            if(agendaWeekBtn) {
+                agendaWeekBtn.addEventListener('click', getCalendarData);
+                document.querySelector(UISelectors.updateStatus).disabled = false;
+            }
+
+            let agendaDayBtn = document.querySelector(UISelectors.agendaDay);
+            if(agendaDayBtn) {
+                agendaDayBtn.addEventListener('click', getCalendarData);
+                document.querySelector(UISelectors.updateStatus).disabled = true;
+            }
+        
+        let managersCalendar = document.querySelector('#managersCalendar');
+            if(managersCalendar) {
+                managersCalendar.addEventListener('click', (e)=>{
+                    if(e.target.classList.contains('addShiftBtn')){
+                        let date = e.target.getAttribute('data-date');
+                        location.href = `/dashboard/add-shift/${date}`;
+                    }
+                });
+            }  
+    }
+    
+    const drawCalendars = function(eventData, resources, departmentText){
+
+            $('#managersCalendar').fullCalendar({
+                
+                themeSystem: 'bootstrap4',
+                defaultView: 'timelineWeek',
+                firstDay: 1,
+                allDaySlot: false,
+                slotEventOverlap: true,
+                columnHeaderFormat: 'ddd M.D YY',
+                header: {
+                  left: 'prev,next',
+                  center: 'title',
+                  right: 'timelineDay,timelineWeek,timelineMonth'
+                  //right: 'addEventButton, month, agendaWeek, agendaDay'
+                },
+                minTime:  "6:00:00",
+                maxTime: "24:00:00",
+                resourceLabelText: 'Departments',
+                resourceGroupField: 'department',
+                resources: resources,
+                events: eventData,
+                eventLimit: true,
+                selectable:true,
+                selectHelper: true,
+                editable: true,
+                customButtons: {
+                  addEventButton: {
+                    text: 'Add Employee',
+                    click: function() {
+                        location.href = `/employee/add`;  
+                    }
+                  }
+                }
+            });
+             
+            
+            $('#employeesCalendar').fullCalendar({
+                themeSystem: 'bootstrap4',
+                defaultView: 'agendaWeek',
+                firstDay: 1,
+                allDaySlot: false,
+                slotEventOverlap: true,
+                columnHeaderFormat: 'ddd M.D YY',
+                header: {
+                  left: 'prev,next',
+                  center: 'title',
+                  right: 'month, agendaWeek, agendaDay'
+                },
+                minTime:  "6:00:00",
+                maxTime: "24:00:00",
+                events: eventData,
+                eventLimit: true,
+                selectable:true,
+                selectHelper: false,
+                editable: false,
+            });
+    }
+    
+
     const updateStatusCard = function(){
 
             fetch(`/dashboard/schedules.json`)
@@ -502,8 +549,9 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                     employeeCalendar = document.querySelector('#employeesCalendar');
                 
                 if(managerCalendar || employeeCalendar){
-                    
-                    let calendarStartDate = document.querySelector('.fc-axis').nextElementSibling.getAttribute('data-date');
+                    let headerDays = document.querySelectorAll('.fc-scroller-canvas')[1];
+                    let daysArray = Array.from(headerDays.firstElementChild.firstElementChild.lastElementChild.firstElementChild.children)[0].getAttribute('data-date').split('T')[0];
+
                     
                     scheduleData.forEach(schedule => {
 
@@ -555,16 +603,11 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
             });
         }
     }
-    
-    
-    
-
-    
+ 
     //Public Methods
     return {
         init: () => {
-            displayManagerCalander();
-            
+            getCalendarData();
             loadEventListeners();
             appendTimeIntervals('00:00', '24:00');
             
