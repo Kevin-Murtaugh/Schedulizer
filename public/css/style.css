@@ -28,6 +28,18 @@ input[type=text], select, textarea {
     width: 77%;
 }
 
+.btn-primary{
+    background-color: #1F3D7C;
+    color:white;
+    border: white;
+}
+
+.has-error .control-label,
+.has-error .help-block,
+.has-error .form-control-feedback {
+    color: red;
+}
+
 
 /********************NAVBAR********************/
 .navbar-img__logo{
@@ -72,6 +84,11 @@ input[type=text], select, textarea {
     background-color: white;
 }
 
+.ctaBtn{
+    background-color: #1F3D7C;
+    color:white;
+    border: white;
+}
 
 /******************************DASHBOARD LANDING PAGES**********************************/
 .dashboard-container {

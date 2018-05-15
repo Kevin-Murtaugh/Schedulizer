@@ -4,7 +4,7 @@
             <div class="card-header">
                 <h5>Sign Up</h5>
             </div>
-                <form action="/auth/register" method="post">
+                <form action="/auth/register" method="post" id="registrationForm">
                         <div class="card-footer">
                             <h4>Don't have an account?</h4>
                           <p> Enter your billing details below</p>    
@@ -17,7 +17,7 @@
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="loginEmail">Email address</label>
-                                        <input type="email" class="form-control" id="loginEmail" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                                        <input type="email" class="form-control" id="loginEmail" name="email" placeholder="Enter email">
                                     </div>    
                                 </div>
                             </div>
@@ -33,7 +33,7 @@
                                           <div class="col-md-6 pl-0">
                                                 <div class="form-group">
                                                     <label for="firstName">First Name</label>
-                                                    <input type="text" class="form-control" id="firstName" name="firstName" aria-describedby="emailHelp">
+                                                    <input type="text" class="form-control" id="firstName" name="firstName">
                                                 </div>  
                                           </div>
                                           <div class="col-md-6 pr-0">
@@ -78,7 +78,7 @@
                                           <div class="col-md-6 pl-0 pr-0">
                                               <div class="form-group">
                                                     <label for="zip">Zip</label>
-                                                    <input type="number" class="form-control" id="zip" name="zip"">
+                                                    <input type="number" class="form-control" id="zip" name="zip">
                                                 </div> 
                                           </div>
                                     </div>
@@ -86,7 +86,7 @@
                                         <div class="col-md-12 pl-0 pr-0">
                                             <div class="form-group">
                                                 <label for="phoneNumber" class="d-block">Phone Number</label>
-                                                <input type="tel" class="form-control" id="phone" name=phoneNumber placeholder="Phone Number">
+                                                <input type="tel" class="form-control" id="phone" name="phoneNumber" placeholder="Phone Number">
                                             </div>  
                                         </div>
                                     </div>    
@@ -104,6 +104,13 @@
                                             <div class="form-group">
                                                 <label for="loginPass">Password</label>
                                                 <input type="password" class="form-control" id="loginPass" name="password" placeholder="Password">
+                                            </div>    
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 pl-0 pr-0">
+                                            <div class="progress password-progress">
+                                                <div id="strengthBar" class="progress-bar" role="progressbar" style="width: 0;"></div>
                                             </div>    
                                         </div>
                                     </div>
@@ -173,4 +180,3 @@
         </div>
     </div>
 </div>
-
