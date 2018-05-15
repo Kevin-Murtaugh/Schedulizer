@@ -12,6 +12,11 @@
                 <li class="nav-item  mx-2">
                     <a class="nav-link" href="/message-board">Message Board</a>
                 </li>
+                {{#ifCond user.isAdmin '||' user.isManager}}
+                    <li class="nav-item  mx-2">
+                        <a class="nav-link" href="/reports">Reports</a>
+                    </li>
+                {{/ifCond}}
                 <li class="nav-item dropdown mx-2">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Employees</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -27,15 +32,14 @@
                        {{#ifCond user.isAdmin '||' user.isManager}}
                             <a class="dropdown-item" href="/settings">Schedule Settings</a>
                         {{/ifCond}}
+                        <a class="dropdown-item" href="#" id="sendNewsLetter">Send News Letter</a>
                         <a class="dropdown-item" href="/account/{{user.id}}">Your Account</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/auth/logout">Sign Out</a>
-                        <a class="dropdown-item" href="#" id="sendNewsLetter">Send News Letter</a>
+                        
                     </div>    
                 </li>
-                <li class="nav-item  mx-2">
-                    <a class="nav-link" href="/reports">Reports</a>
-                </li>
+                
             </ul>
         {{else }}
             <ul class="navbar-nav ml-auto text-center">

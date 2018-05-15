@@ -3,7 +3,9 @@ option {
     font-weight: bold;
 }
 
-
+input[type=text], select, textarea {
+    padding: .375rem .75rem!important;
+}
 
 
 /**************************BOOTSTRAP OVERRIDES*******************/
