@@ -28,12 +28,13 @@ router.get('/view', ensureAuthenticated, (req, res) => {
                 'firstName': user.firstName,
                 'lastName': user.lastName,
                 'email': user.email,
-                'phoneNumber': user.full_phone,
+                'phoneNumber': user.phoneNumber,
                 'department': user.department,
                 'hourlyPay': user.hourlyPay
             }
             // console.log(viewUser);
             foundUsers.push(viewUser);
+            console.log(foundUsers);
         });
         res.render('employee/view', {
             users: foundUsers
