@@ -1,62 +1,176 @@
-<div class="row mt-5" >
-    <div class="col-md-6  mx-auto">
+<div class="row mt-5 d-flex justify-content-center" >
+    <div class="col-md-6">
         <div class="card text-white bg-dark">
             <div class="card-header">
-                Signup
+                <h5>Sign Up</h5>
             </div>
-            <div class="card-body">
                 <form action="/auth/register" method="post">
-                       <div class="row">
-                           <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="firstName">First Name</label>
-                                    <input type="text" class="form-control" id="firstName" name="firstName" aria-describedby="emailHelp">
-                                </div>   
-                           </div>
-                           <div class="col-md-6">
-                               <div class="form-group">
-                                    <label for="lastName">Last Name</label>
-                                    <input type="text" class="form-control" id="lastName" name="lastName">
+                        <div class="card-footer">
+                            <h4>Don't have an account?</h4>
+                          <p> Enter your billing details below</p>    
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h4>Email</h4>
                                 </div>
-                           </div>
-                       </div>
-                       <div class="row">
-                           <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="loginEmail">Email address</label>
-                                    <input type="email" class="form-control" id="loginEmail" name="email" aria-describedby="emailHelp" placeholder="Enter email">
-                                </div> 
-                           </div>
-                           <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="phoneNumber" class="d-block">Phone Number</label>
-                                    <input type="tel" class="form-control" id="phone" name=phoneNumber placeholder="Phone Number">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="loginEmail">Email address</label>
+                                        <input type="email" class="form-control" id="loginEmail" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                                    </div>    
                                 </div>
-                           </div>
-                       </div>
-                       <div class="row">
-                           <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="loginPass">Password</label>
-                                    <input type="password" class="form-control" id="loginPass" name="password" placeholder="Password">
-                                </div>   
-                           </div>
-                       </div>
-                       <div class="row">
-                           <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="passwordConfirm">Confirm Password</label>
-                                    <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Re-type Password">
-                                </div>   
-                           </div>
-                       </div>
-
-                    <button type="submit" class="btn btn-primary btn-block registerSubmitBtn">Submit</button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h4>Billing Details</h4>
+                                    <p>Note: Your billing information must match the information associated with the credit card making the purchase.</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                          <div class="col-md-6 pl-0">
+                                                <div class="form-group">
+                                                    <label for="firstName">First Name</label>
+                                                    <input type="text" class="form-control" id="firstName" name="firstName" aria-describedby="emailHelp">
+                                                </div>  
+                                          </div>
+                                          <div class="col-md-6 pr-0">
+                                                <div class="form-group">
+                                                    <label for="lastName">Last Name</label>
+                                                    <input type="text" class="form-control" id="lastName" name="lastName">
+                                                </div>  
+                                          </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 pl-0 pr-0">
+                                            <div class="form-group">
+                                                <label for="businessName">Business Name</label>
+                                                <input type="text" class="form-control" id="businessName" name="businessName" placeholder="Dollar Bills Inc.">
+                                            </div>    
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 pl-0 pr-0">
+                                            <div class="form-group">
+                                                <label for="address">Address</label>
+                                                <input type="text" class="form-control" id="address" name="address" placeholder="123 Fun Street">
+                                            </div>     
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 pl-0 pr-0">
+                                            <div class="form-group">
+                                                <label for="city">City</label>
+                                                <input type="text" class="form-control" id="city" name="city" placeholder="JohnDoe@test.com">
+                                            </div>  
+                                        </div>
+                                    </div>
+                                    <div class="row">   
+                                          <div class="col-md-6 pl-0">
+                                                <div class="form-group">
+                                                   <label for="state">State</label>
+                                                    <select class="form-control states mt-0" name='state'>
+                                                    </select>
+                                                </div>  
+                                          </div>
+                                          <div class="col-md-6 pl-0 pr-0">
+                                              <div class="form-group">
+                                                    <label for="zip">Zip</label>
+                                                    <input type="number" class="form-control" id="zip" name="zip" placeholder="123 Fun Street">
+                                                </div> 
+                                          </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 pl-0 pr-0">
+                                            <div class="form-group">
+                                                <label for="phoneNumber" class="d-block">Phone Number</label>
+                                                <input type="tel" class="form-control" id="phone" name=phoneNumber placeholder="Phone Number">
+                                            </div>  
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h4>Account Password</h4>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-12 pl-0 pr-0">
+                                            <div class="form-group">
+                                                <label for="loginPass">Password</label>
+                                                <input type="password" class="form-control" id="loginPass" name="password" placeholder="Password">
+                                            </div>    
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 pl-0 pr-0">
+                                            <div class="form-group">
+                                                <label for="passwordConfirm">Confirm Password</label>
+                                                <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Re-type Password">
+                                            </div>    
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary btn-block registerSubmitBtn">Submit</button>    
+                                </div>
+                            </div>
+                        </div>
                 </form>
-            </div>
             <div class="card-footer">
-                <a href="/auth/google" class="btn btn-danger btn-block googLogin"><i class="fab fa-google left"></i> Login with Google</a>
+               <div class="row">
+                   <div class="col-md-12">
+                        <a href="/auth/google" class="btn btn-danger btn-block googLogin"><i class="fab fa-google left"></i> Login with Google</a>   
+                   </div>
+               </div>
             </div>
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-dark" style="width: 20rem;">
+          <img class="card-img-top" src="./img/secretary.jpg" alt="Card image cap">
+          <div class="card-body d-flex flex-column justify-content-center">
+            <h5 class="card-title text-center">Use Our Live Chat</h5>
+            <a href="#" class="btn btn-primary btn-sm"><i class="far fa-comments mr-3"></i>Chat Now</a>
+          </div>
+          <div class="card-footer">
+              <div class="row">
+                  <div class="col-md-2"><i class="far fa-envelope"></i></div>
+                  <div class="col-md-10">
+                      <p class="mb-0">Email us your questions at</p>
+                        <a href="mailto:help@schedulizer.com">help@schedulizer.com</a>
+                  </div>
+              </div>
+          </div>
+          <div class="card-footer">
+              <div class="row">
+                  <div class="col-md-2"><i class="fas fa-question-circle"></i></div>
+                  <div class="col-md-10">
+                      <p class="mb-0">Have a question?</p>
+                      <p>Check out out <a href="/faqs">FAQs</a></p>
+                  </div>
+              </div>
+          </div>
+          <div class="card-footer">
+              <div class="row">
+                  <div class="col-md-2"><i class="fas fa-globe"></i></div>
+                  <div class="col-md-10">
+                        <p class="mb-0">Traducción Española</p> 
+                        <small class="text-muted"><a href="#">Cómo ordenar por nuestra página 
+                            Información importante acerca de su entrega</a></small> 
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
 </div>
+
