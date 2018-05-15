@@ -14,13 +14,6 @@
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-  "production": {
-    "username": "e87ggu8erqk9f6i3",
-    "password": "u2zqy806yq5nh50l",
-    "database": "nmzqqbhu3hkwg81b",
-    "host": "thh2lzgakldp794r.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-    "dialect": "mysql"
-  },
     "darren": {
     "username": "root",
     "password": "",
