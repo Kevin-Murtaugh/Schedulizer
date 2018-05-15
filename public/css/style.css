@@ -27,6 +27,12 @@ input[type=text], select, textarea {
     display: block;
     width: 77%;
 }
+.footer-background{
+    height: 45px;
+    line-height: 7%;
+    padding-top: 15px;
+    font-size: 15px;
+}
 
 .btn-primary{
     background-color: #1F3D7C;
@@ -192,7 +198,7 @@ html, body {
 }
 
 #footer-verbiage {
-    margin-top: 5px;
+    font-size: 8px;
 } */
 
 .publishStatusBtn {
