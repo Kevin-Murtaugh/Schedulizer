@@ -38,5 +38,8 @@
     "sequelize": "^4.37.7",
     "socket.io": "^2.1.0",
     "twilio": "^3.17.0"
+  },
+  "devDependencies": {
+    "dotenv": "^5.0.1"
   }
 }

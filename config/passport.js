@@ -2,9 +2,9 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcryptjs');
-const keys = require('./keys');
 const {google} = require('googleapis');
-
+require('dotenv/config');
+require('./../server');
 
 const db = require("../models");
 
@@ -12,8 +12,8 @@ module.exports = function(passport){
     /*****************************GOOGLE STRATEGY******************/
     passport.use(
         new GoogleStrategy({
-            clientID: keys.google.googleClientID,
-            clientSecret: keys.google.googleClientSecret,
+            clientID: process.env.GOOGLE_CLIENTID,
+            clientSecret: process.env.GOOGLE_CLIENTSECRET,
             callbackURL: "/auth/google/callback",
             scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar'],
             proxy: true

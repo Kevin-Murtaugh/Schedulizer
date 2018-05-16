@@ -4,11 +4,12 @@ const path = require("path");
 const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
 const socketio = require('socket.io');
 const _ = require('lodash');
-const keys = require('../config/keys');
 const nodeMailer = require("nodemailer");
 const twilio = require('twilio');
 const moment = require('moment');
 
+require('dotenv/config');
+require('./../server');
 
 const db = require("../models");
 
@@ -104,7 +105,7 @@ router.post('/', (req, res)=>{
 
                         let phoneNumber = foundEmployee.dataValues.phoneNumber;
 
-                        const client = new twilio(keys.twilio.accountSID, keys.twilio.authToken);
+                        const client = new twilio(process.env.TWILIO_ACCOUNTSID, process.env.TWILIO_AUTHTOKEN);
 
                             client.messages.create({
                                 body: finalMessage,
