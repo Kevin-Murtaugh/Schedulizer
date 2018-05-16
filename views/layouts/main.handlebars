@@ -17,18 +17,25 @@
     </head>
     <body class="bg-secondary">
        {{> _header}}
+            
             <main>
-                {{{body}}}  
+                {{{body}}}      
             </main>
-            <!-- Modal -->
-            <div id="modal"> 
-                <div class="modalcontent">
-                        <h1>Your email has been registered! <hr><br></h1>
-                        <h5>You should receive an email news letter confirmation from us shortly!</h5>
-                        <button type="button" class="btn btn-primary mt-2" id="closeModal">close</button>
-                </div>
-            </div>
-           {{> _footer}}
+               
+            
+                       
+
+            {{> _footer}}
+            
+            
+            
+            {{> _newsletterModal}}
+            {{> _emailConfirmation}}
+            
+            
+            
+            
+        
        
         <script src="/js/jquery.min.js"></script>
         <script src="/js/jquery-ui.min.js"></script>
@@ -44,6 +51,5 @@
         <script src="/js/fullcalendar.min.js"></script>
         <script src="/js/scheduler.min.js"></script>
         <script src="/js/appFrontEnd.js"></script>
-
     </body>
 </html>
