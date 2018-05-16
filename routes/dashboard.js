@@ -4,10 +4,12 @@ const path = require("path");
 const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
 const socketio = require('socket.io');
 const _ = require('lodash');
-const keys = require('../config/keys');
 const nodeMailer = require("nodemailer");
 const twilio = require('twilio');
+const moment = require('moment');
 
+require('dotenv/config');
+require('./../server');
 
 const db = require("../models");
 
@@ -40,35 +42,30 @@ router.get('/schedules.json', (req, res)=>{
 
 router.get('/add-shift/:date', ensureAuthenticated, function(req,res) {
     let date = req.params.date;
-    let department = req.query.department;
 
-    db.User.findAll({
-            department: department
-    }).then(function(userData) {
+    db.User.findAll({}).then(function(userData) {
+
         let users = userData.map(user => {
             // console.log(user.firstName + " " + user.lastName);
-            if(user.department === department) {
                 return {
                     userName: user.firstName + " " + user.lastName,
-                    userID: user.id
+                    userID: user.id,
+                    department: user.department
                 }
-            }
         }).filter(elem => {
             return elem !== undefined;
         });
 
-
         res.render("shifts/add-shift", {
             users: users,
-            date: date,
-            department: department
+            date: date
         });
     });
 });
 
 /*******************DASHBOARD POST ROUTES***********************/
 router.post('/', (req, res)=>{
-    //Save schedule with status of published and up all events within that schedule to the status of published
+    //Save schedule with status of published and update all events within that schedule to the status of published
     db.Schedule.create(req.body).then(savedSchedule => {
         //FIND ALL EVENTS TO SEND OUT TEXT MESSAGE
         db.Event.findAll({
@@ -82,7 +79,22 @@ router.post('/', (req, res)=>{
             let employeeShifts = _.mapValues(_.groupBy(foundEventsArray, 'title'),
                 elist => elist.map(employee => _.omit(employee, ['title', 'id', 'department', 'url', 'className', 'overlap', 'color', 'shiftStatus'])));
                 let scheduleLength = Object.keys(employeeShifts).length;
-
+                
+//            let employeeHours = employeeShifts.map(shift => {
+//                
+//                let userStart = shift.start.split(" ")[1];
+//                let userEnd = shift.end.split(" ")[1];
+//                let start = moment(userStart, "HH:mm");
+//                let end = moment(userEnd, "HH:mm");
+//                let duration = moment.duration(end.diff(start));
+//                let userHours = parseInt(duration.asHours());
+//                
+//                return {
+//                    userId: shift.userId,
+//                    shiftLength: userHours
+//                }
+//            });
+            console.log(employeeHours);
                 var x;
             
                 for (x in employeeShifts) {
@@ -90,11 +102,13 @@ router.post('/', (req, res)=>{
                     let employeeID = employeeShifts[x][0].userId;
                     let shiftArray = employeeShifts[x];
                     let shiftMessagesArray = shiftArray.map(shift =>{
-                       let message = `Shift Start: ${shift.start} - Shift End: ${shift.end}`;
+                        let shiftStart = moment(new Date(shift.start)).format("ddd MMM, Do hh:mm a");
+                        let shiftEnd = moment(new Date(shift.end)).format("hh:mm a");
+                        let message = `${shiftStart} -  ${shiftEnd},\n`;
                         return message;
                     });
                     
-                    let initialSalutation = `I was running into a throughput error so I am trying again. text me if it works. Hello ${x}, I hope you are having a great day! Your schedule for this upcoming week is as follows:`;
+                    let initialSalutation = `ManagerComments: ${req.body.managerComments} Sheduled Shifts:\n`;
                     shiftMessagesArray.unshift(initialSalutation);
                     let finalMessage = shiftMessagesArray.join(' ');
                     
@@ -106,7 +120,7 @@ router.post('/', (req, res)=>{
 
                         let phoneNumber = foundEmployee.dataValues.phoneNumber;
 
-                        const client = new twilio(keys.twilio.accountSID, keys.twilio.authToken);
+                        const client = new twilio(process.env.TWILIO_ACCOUNTSID, process.env.TWILIO_AUTHTOKEN);
 
                             client.messages.create({
                                 body: finalMessage,
@@ -156,24 +170,27 @@ router.post('/add-shift/:date', ensureAuthenticated, function(req, res) {
     let color,
         htmlClass;
     
-    if(req.query.department === 'FOH'){
-        color = '#f7992e';
-        htmlClass = 'FOHDraftShift';
-    }else{
-        color = '#2e7bf7';
-        htmlClass = 'BOHDraftShift';
-    }
+    
     
     db.User.findOne({    
           where: {
             id: req.body.userId
           }
         }).then(function(user) {
+            console.log(user);
             let title = `${user.dataValues.firstName} ${user.dataValues.lastName}`;
+            
+            if(user.dataValues.department === 'FOH'){
+                color = '#f7992e';
+                htmlClass = 'FOHDraftShift';
+            }else{
+                color = '#2e7bf7';
+                htmlClass = 'BOHDraftShift';
+            }
         
             let newEvent = {
                 title: title,
-                department: req.query.department,
+                department: user.dataValues.department,
                 start: `${req.params.date} ${req.body.shiftStart}`,
                 end: `${req.params.date} ${req.body.shiftEnd}`,
                 overlap: true,

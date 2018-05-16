@@ -1,5 +1,5 @@
 {{#ifCond user.isAdmin '||' user.isManager}}
-<div class="row mt-5">
+<div class="row mt-5 mb-5">
     <div class="col-md-6  mx-auto">
         <div class="card text-white bg-dark">
             <div class="card-header">
@@ -85,7 +85,11 @@
     </div>
 </div>
 </div>
-      <!-- Modal -->
+      
+{{/ifCond}}
+
+
+<!-- Modal -->
             <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -105,4 +109,3 @@
                 </div>
             </div>
             </div>
-{{/ifCond}}

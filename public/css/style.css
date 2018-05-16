@@ -3,9 +3,7 @@ option {
     font-weight: bold;
 }
 
-input[type=text], select, textarea {
-    padding: .375rem .75rem!important;
-}
+
 
 
 /**************************BOOTSTRAP OVERRIDES*******************/
@@ -27,30 +25,18 @@ input[type=text], select, textarea {
     display: block;
     width: 77%;
 }
-.footer-background{
-    height: 45px;
-    line-height: 7%;
-    padding-top: 15px;
-    font-size: 15px;
-}
-
-.btn-primary{
-    background-color: #1F3D7C;
-    color:white;
-    border: white;
-}
-
-.has-error .control-label,
-.has-error .help-block,
-.has-error .form-control-feedback {
-    color: red;
-}
 
 
 /********************NAVBAR********************/
 .navbar-img__logo{
     width: 6%;
 }
+
+a.nav-link {
+    font-weight: bold;
+    color: white !important;
+}
+
 
 /*************** CTA LANDING PAGE *******************/
 .lp__header {
@@ -100,11 +86,6 @@ input[type=text], select, textarea {
     background-color: white;
 }
 
-.ctaBtn{
-    background-color: #1F3D7C;
-    color:white;
-    border: white;
-}
 
 /******************************DASHBOARD LANDING PAGES**********************************/
 .dashboard-container {
@@ -162,6 +143,7 @@ input[type=text], select, textarea {
 
 .features-pic {
         max-width:550px;
+        max-height:350px;
         padding-left: 20px;
         width: auto;
         height: auto;
@@ -175,6 +157,7 @@ input[type=text], select, textarea {
 .login-container {
     height: 100%;
 }
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -207,7 +190,7 @@ html, body {
 }
 
 #footer-verbiage {
-    font-size: 8px;
+    margin-top: 5px;
 } */
 
 .publishStatusBtn {
@@ -272,7 +255,7 @@ span.country-name {
     transform: translate(-50%, -50%);
     background: #e6e6e6;
     width: 60%;
-    height: 80%;
+    height: 70%;
     padding: 20px;
     border: solid white;
     border-width: 4px;
@@ -317,6 +300,7 @@ input[type=submit] {
     padding: 12px 20px;
     border: none;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 input[type=submit]:hover {
@@ -337,6 +321,11 @@ input[type=submit]:hover {
     display: table;
     clear: both;
 }
+
+#closeAdminModal {
+    border-radius: 10px;
+}
+
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
