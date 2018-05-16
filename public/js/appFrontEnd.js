@@ -367,6 +367,7 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                             let events = Array.from(document.querySelectorAll('.fc-v-event'));
 
                             events.forEach(event => {
+                                
                                 if(event.classList.contains('FOHDraftShift')){
                                     event.classList.remove('FOHDraftShift');
                                 }else if(event.classList.contains("BOHDraftShift")){
