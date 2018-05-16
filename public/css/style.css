@@ -258,18 +258,15 @@ span.country-name {
     width: 100%;
 }
 
-* {
-    box-sizing: border-box;
-}
 
 /* Style inputs */
 input[type=text], select, textarea {
     width: 100%;
+    height: 50%;
     padding: 12px;
     border: 1px solid #ccc;
     margin-top: 6px;
     margin-bottom: 16px;
-    resize: vertical;
 }
 
 .contactContainer {
@@ -309,7 +306,13 @@ input[type=submit]:hover {
 #closeAdminModal {
     border-radius: 10px;
 }
+#adminForm {
+    height: 100%;
+}
 
+#adminMessage {
+    height: 50%;
+}
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
