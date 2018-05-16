@@ -17,10 +17,25 @@
     </head>
     <body class="bg-secondary">
        {{> _header}}
+            
             <main>
-                {{{body}}}  
+                {{{body}}}      
             </main>
-           {{> _footer}}
+               
+            
+                       
+
+            {{> _footer}}
+            
+            
+            
+            {{> _newsletterModal}}
+            {{> _emailConfirmation}}
+            
+            
+            
+            
+        
        
         <script src="/js/jquery.min.js"></script>
         <script src="/js/jquery-ui.min.js"></script>
@@ -36,6 +51,5 @@
         <script src="/js/fullcalendar.min.js"></script>
         <script src="/js/scheduler.min.js"></script>
         <script src="/js/appFrontEnd.js"></script>
-
     </body>
 </html>

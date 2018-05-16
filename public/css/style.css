@@ -3,9 +3,7 @@ option {
     font-weight: bold;
 }
 
-input[type=text], select, textarea {
-    padding: .375rem .75rem!important;
-}
+
 
 
 /**************************BOOTSTRAP OVERRIDES*******************/
@@ -27,30 +25,18 @@ input[type=text], select, textarea {
     display: block;
     width: 77%;
 }
-.footer-background{
-    height: 45px;
-    line-height: 7%;
-    padding-top: 15px;
-    font-size: 15px;
-}
-
-.btn-primary{
-    background-color: #1F3D7C;
-    color:white;
-    border: white;
-}
-
-.has-error .control-label,
-.has-error .help-block,
-.has-error .form-control-feedback {
-    color: red;
-}
 
 
 /********************NAVBAR********************/
 .navbar-img__logo{
     width: 6%;
 }
+
+a.nav-link {
+    font-weight: bold;
+    color: white !important;
+}
+
 
 /*************** CTA LANDING PAGE *******************/
 .lp__header {
@@ -90,11 +76,6 @@ input[type=text], select, textarea {
     background-color: white;
 }
 
-.ctaBtn{
-    background-color: #1F3D7C;
-    color:white;
-    border: white;
-}
 
 /******************************DASHBOARD LANDING PAGES**********************************/
 .dashboard-container {
@@ -152,6 +133,7 @@ input[type=text], select, textarea {
 
 .features-pic {
         max-width:550px;
+        max-height:350px;
         padding-left: 20px;
         width: auto;
         height: auto;
@@ -197,7 +179,7 @@ html, body {
 }
 
 #footer-verbiage {
-    font-size: 8px;
+    margin-top: 5px;
 } */
 
 .publishStatusBtn {
@@ -209,7 +191,6 @@ html, body {
 h7 {
     text-justify: right;
 }
-
 
 
 .modalcontent {

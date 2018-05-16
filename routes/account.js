@@ -12,7 +12,7 @@ const db = require("../models");
 router.use(express.static(path.join(__dirname, '../public')));
 
 router.get('/:id', ensureAuthenticated, (req, res)=>{
-    
+        
     db.User.findOne({
         where: {
             id: req.params.id

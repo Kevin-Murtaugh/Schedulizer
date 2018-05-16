@@ -308,21 +308,21 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
             previousWeekBtn.addEventListener('click', updateStatusCard);
         }
 
-        if(updateStatusBtn){
+        if(updateStatusBtn ){
             updateStatusBtn.addEventListener('click', (e)=>{
-                let firstDate = document.querySelector('.fc-axis').nextElementSibling.getAttribute('data-date');
-                let lastDate = document.querySelector('.fc-axis').nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.getAttribute('data-date');
+                e.preventDefault();
                 let managerComments = document.querySelector('#comments').value;
+                let headerDays = document.querySelectorAll('.fc-scroller-canvas')[1];
+                let firstDate = Array.from(headerDays.firstElementChild.firstElementChild.lastElementChild.firstElementChild.children)[0].getAttribute('data-date').split('T')[0];
+                let lastDate = Array.from(headerDays.firstElementChild.firstElementChild.lastElementChild.firstElementChild.children)[6].getAttribute('data-date').split('T')[0];
                 
-                if(publishedCheck.checked){
-                    
                     let newSchedule = {
                         managerComments: managerComments,
                         scheduleStart: firstDate,
                         scheduleEnd: lastDate,
                         scheduleStatus: 'published'
                     }
-                    
+
                     fetch('/dashboard', {
                         headers: {
                             'Accept': 'application/json',
@@ -334,35 +334,85 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                         return response.json();
                     }).then((data)=>{
                         
-                        document.querySelector('.commentCard').style.display = 'block';
+                        
                         document.querySelector('.managerComments').innerHTML = data.managerComments;
                         document.querySelector('#comments').value = '';
                         document.querySelector('#comments').disabled = true;
+                        let loaders = document.querySelectorAll('.loader');
+                        
+                        for (var i = 0; i < loaders.length; i++) {
+                            var currentloaders = loaders[i];
+                            currentloaders.style.display = 'block';
+                        }
+
+                        let cardAfter = document.querySelectorAll('.card-after');
+                        
+                        for (var i = 0; i < cardAfter.length; i++) {
+                            var currentcardAfter = cardAfter[i];
+                            currentcardAfter.style.display = 'block';
+                        }
+                        
+                        let cards = document.querySelectorAll('.card');
+                        
+                        for (var i = 0; i < cards.length; i++) {
+                            var currentCard = cards[i];
+                            currentCard.style.border = 0;
+                        }
+                        
                         updateStatusBtn.disabled = true;
                         
-                        let events = Array.from(document.querySelectorAll('.fc-v-event'));
                         
-                        events.forEach(event => {
-                            if(event.classList.contains('FOHDraftShift')){
-                                event.classList.remove('FOHDraftShift')
-                            }else if(event.classList.contains("BOHDraftShift")){
-                                event.classList.remove('BOHDraftShift')
+                        
+                        setInterval(()=>{
+                            let events = Array.from(document.querySelectorAll('.fc-v-event'));
+
+                            events.forEach(event => {
+                                if(event.classList.contains('FOHDraftShift')){
+                                    event.classList.remove('FOHDraftShift');
+                                }else if(event.classList.contains("BOHDraftShift")){
+                                    event.classList.remove('BOHDraftShift');
+                                }
+                            });
+                            
+                            let loaders = document.querySelectorAll('.loader');
+                            for (var i = 0; i < loaders.length; i++) {
+                                var currentloaders = loaders[i];
+                                currentloaders.style.display = 'none';
                             }
-                        })
+
+                            let cardAfter = document.querySelectorAll('.card-after');
+
+                            for (var i = 0; i < cardAfter.length; i++) {
+                                var currentcardAfter = cardAfter[i];
+                                currentcardAfter.style.display = 'none';
+                            }
+
+                            let cards = document.querySelectorAll('.card');
+
+                            for (var i = 0; i < cards.length; i++) {
+                                var currentCard = cards[i];
+                                currentCard.style.border = 0;
+                            }
+                            
+                            document.querySelector('.commentCard').style.display = 'block';
+                            
+                            
+                            
+                        }, 3000);
+                        
+                        
                         
                     }).catch(function (error) {  
                         console.log('Request failure: ', error);  
                     });
-                }
-                
 
-                e.preventDefault();
+
+
+                
             });
         }
-        
 
-
-    }
+    } //End of Event Listeners
     
 
     
@@ -383,7 +433,6 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                                 data.className = '';
                             }
                         });
-                        console.log(eventData);
       
                         let resources = eventData.map(event => {
 
@@ -400,15 +449,11 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                                 }      
 
                         });
-                        console.log(resources);
             
                         drawCalendars(eventData, resources, departmentText);
                         updateStatusCard();
                         appendAddShiftBtn();
                         calendarEventListeners();
-                                
-
-                                    
 
           });
 
@@ -490,10 +535,43 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                 slotEventOverlap: true,
                 columnHeaderFormat: 'ddd M.D YY',
                 header: {
-                  left: 'prev,next',
+                  left: 'prev,next,addEmployeeButton',
                   center: 'title',
                   right: 'timelineDay,timelineWeek,timelineMonth'
-                  //right: 'addEventButton, month, agendaWeek, agendaDay'
+                },
+                minTime:  "6:00:00",
+                maxTime: "24:00:00",
+                resourceLabelText: 'Departments',
+                resourceGroupField: 'department',
+                resources: resources,
+                events: eventData,
+                eventLimit: true,
+                selectable:true,
+                selectHelper: true,
+                editable: true,
+                customButtons: {
+                  addEmployeeButton: {
+                    text: 'New Employee',
+                    click: function() {
+                        location.href = `/employee/add`;  
+                    }
+                  }
+                }
+            });
+             
+        
+        $('#employeesCalendar').fullCalendar({
+                
+                themeSystem: 'bootstrap4',
+                defaultView: 'timelineWeek',
+                firstDay: 1,
+                allDaySlot: false,
+                slotEventOverlap: true,
+                columnHeaderFormat: 'ddd M.D YY',
+                header: {
+                  left: 'prev,next,',
+                  center: 'title',
+                  right: 'timelineDay,timelineWeek,timelineMonth'
                 },
                 minTime:  "6:00:00",
                 maxTime: "24:00:00",
@@ -514,28 +592,7 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                   }
                 }
             });
-             
-            
-            $('#employeesCalendar').fullCalendar({
-                themeSystem: 'bootstrap4',
-                defaultView: 'agendaWeek',
-                firstDay: 1,
-                allDaySlot: false,
-                slotEventOverlap: true,
-                columnHeaderFormat: 'ddd M.D YY',
-                header: {
-                  left: 'prev,next',
-                  center: 'title',
-                  right: 'month, agendaWeek, agendaDay'
-                },
-                minTime:  "6:00:00",
-                maxTime: "24:00:00",
-                events: eventData,
-                eventLimit: true,
-                selectable:true,
-                selectHelper: false,
-                editable: false,
-            });
+        
     }
     
 
@@ -552,10 +609,9 @@ const AppCtrl = (function(ItemCtrl, UICtrl){
                     let headerDays = document.querySelectorAll('.fc-scroller-canvas')[1];
                     let daysArray = Array.from(headerDays.firstElementChild.firstElementChild.lastElementChild.firstElementChild.children)[0].getAttribute('data-date').split('T')[0];
 
-                    
                     scheduleData.forEach(schedule => {
 
-                        if(schedule.scheduleStart === calendarStartDate && schedule.scheduleStatus === "published"){
+                        if(schedule.scheduleStart === daysArray && schedule.scheduleStatus === "published"){
 
                             document.querySelector('.commentCard').style.display = 'block';
                             document.querySelector('.managerComments').innerHTML = schedule.managerComments;

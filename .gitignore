@@ -57,3 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
+# removing config json
+/config/config.json
