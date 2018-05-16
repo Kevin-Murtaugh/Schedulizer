@@ -58,3 +58,4 @@ typings/
 .env
 /config/keys.js
 /config/config.json
+/.env
