@@ -40,28 +40,23 @@ router.get('/schedules.json', (req, res)=>{
 
 router.get('/add-shift/:date', ensureAuthenticated, function(req,res) {
     let date = req.params.date;
-    let department = req.query.department;
 
-    db.User.findAll({
-            department: department
-    }).then(function(userData) {
+    db.User.findAll({}).then(function(userData) {
+
         let users = userData.map(user => {
             // console.log(user.firstName + " " + user.lastName);
-            if(user.department === department) {
                 return {
                     userName: user.firstName + " " + user.lastName,
-                    userID: user.id
+                    userID: user.id,
+                    department: user.department
                 }
-            }
         }).filter(elem => {
             return elem !== undefined;
         });
 
-
         res.render("shifts/add-shift", {
             users: users,
-            date: date,
-            department: department
+            date: date
         });
     });
 });
@@ -156,24 +151,27 @@ router.post('/add-shift/:date', ensureAuthenticated, function(req, res) {
     let color,
         htmlClass;
     
-    if(req.query.department === 'FOH'){
-        color = '#f7992e';
-        htmlClass = 'FOHDraftShift';
-    }else{
-        color = '#2e7bf7';
-        htmlClass = 'BOHDraftShift';
-    }
+    
     
     db.User.findOne({    
           where: {
             id: req.body.userId
           }
         }).then(function(user) {
+            console.log(user);
             let title = `${user.dataValues.firstName} ${user.dataValues.lastName}`;
+            
+            if(user.dataValues.department === 'FOH'){
+                color = '#f7992e';
+                htmlClass = 'FOHDraftShift';
+            }else{
+                color = '#2e7bf7';
+                htmlClass = 'BOHDraftShift';
+            }
         
             let newEvent = {
                 title: title,
-                department: req.query.department,
+                department: user.dataValues.department,
                 start: `${req.params.date} ${req.body.shiftStart}`,
                 end: `${req.params.date} ${req.body.shiftEnd}`,
                 overlap: true,
