@@ -65,7 +65,7 @@ router.get('/add-shift/:date', ensureAuthenticated, function(req,res) {
 
 /*******************DASHBOARD POST ROUTES***********************/
 router.post('/', (req, res)=>{
-    //Save schedule with status of published and up all events within that schedule to the status of published
+    //Save schedule with status of published and update all events within that schedule to the status of published
     db.Schedule.create(req.body).then(savedSchedule => {
         //FIND ALL EVENTS TO SEND OUT TEXT MESSAGE
         db.Event.findAll({
@@ -79,7 +79,22 @@ router.post('/', (req, res)=>{
             let employeeShifts = _.mapValues(_.groupBy(foundEventsArray, 'title'),
                 elist => elist.map(employee => _.omit(employee, ['title', 'id', 'department', 'url', 'className', 'overlap', 'color', 'shiftStatus'])));
                 let scheduleLength = Object.keys(employeeShifts).length;
-
+                
+//            let employeeHours = employeeShifts.map(shift => {
+//                
+//                let userStart = shift.start.split(" ")[1];
+//                let userEnd = shift.end.split(" ")[1];
+//                let start = moment(userStart, "HH:mm");
+//                let end = moment(userEnd, "HH:mm");
+//                let duration = moment.duration(end.diff(start));
+//                let userHours = parseInt(duration.asHours());
+//                
+//                return {
+//                    userId: shift.userId,
+//                    shiftLength: userHours
+//                }
+//            });
+            console.log(employeeHours);
                 var x;
             
                 for (x in employeeShifts) {

@@ -56,8 +56,6 @@ typings/
 
 # dotenv environment variables file
 .env
-
-# removing config json
-/config/config.json
 /config/keys.js
 /.env
+/config/config.json
