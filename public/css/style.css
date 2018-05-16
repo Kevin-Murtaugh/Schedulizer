@@ -3,53 +3,6 @@ option {
     font-weight: bold;
 }
 
-input[type=text], select, textarea {
-    padding: .375rem .75rem!important;
-}
-
-input[type=text], select, textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    margin-top: 6px;
-    margin-bottom: 16px;
-    resize: vertical;
-}
-
-
-
-input[type=submit] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    cursor: pointer;
-}
-
-input[type=submit]:hover {
-    background-color: #45a049;
-}
-
-ul {
-  list-style-type: none;
-}
-
-a{
-    color: #fff;
-}
-
-html {
-  height: 100%;
-}
-body {
-  min-height: 100%;
-  display: grid;
-  grid-template-rows: 5rem auto 5rem;
-}
-.footer {
-  grid-row-start: 3;
-  grid-row-end: 4;
-}
 
 
 
@@ -62,7 +15,6 @@ body {
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    position: relative;
 }
 
 .card:hover {
@@ -73,30 +25,18 @@ body {
     display: block;
     width: 77%;
 }
-.footer-background{
-    height: 45px;
-    line-height: 7%;
-    padding-top: 15px;
-    font-size: 15px;
-}
-
-.btn-primary{
-    background-color: #1F3D7C;
-    color:white;
-    border: white;
-}
-
-.has-error .control-label,
-.has-error .help-block,
-.has-error .form-control-feedback {
-    color: red;
-}
 
 
 /********************NAVBAR********************/
 .navbar-img__logo{
     width: 6%;
 }
+
+a.nav-link {
+    font-weight: bold;
+    color: white !important;
+}
+
 
 /*************** CTA LANDING PAGE *******************/
 .lp__header {
@@ -124,7 +64,7 @@ body {
 
 .lp__cta-newsletter {
     position: relative;
-    bottom: 20px;
+    bottom: 0;
     width: 100%;
 }
 
@@ -136,11 +76,6 @@ body {
     background-color: white;
 }
 
-.ctaBtn{
-    background-color: #1F3D7C;
-    color:white;
-    border: white;
-}
 
 /******************************DASHBOARD LANDING PAGES**********************************/
 .dashboard-container {
@@ -198,6 +133,7 @@ body {
 
 .features-pic {
         max-width:550px;
+        max-height:350px;
         padding-left: 20px;
         width: auto;
         height: auto;
@@ -212,50 +148,40 @@ body {
     height: 100%;
 }
 
-.card-after{
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+  }
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+  }
+.footer {
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: 0;
     width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 50px;
+  }
+  
+/* .footer-background {
+    background-color:blueviolet;
+}
+
+html, body {
     height: 100%;
-    display: none;
-    background: rgba(0, 0, 0, .6);
-    z-index: 9;
+}
+#footer-location {
+    position: relative;
+    width: 100%;
+    height: 50px;
 }
 
-.loader {
-    border: 5px solid #ffffff;
-    border-radius: 50%;
-    border-top: 5px solid #3498db;
-    width: 75px;
-    height: 75px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 1s linear infinite;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 10;
-    display:none;
-    transform: translate(-50%, -50%);
-}
-
-.schedStatLoader{
-    left: 35%;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-
-
+#footer-verbiage {
+    margin-top: 5px;
+} */
 
 .publishStatusBtn {
     font-weight: bold;
@@ -265,10 +191,6 @@ body {
 }
 h7 {
     text-justify: right;
-}
-
-.fc-license-message {
-    display: none;
 }
 
 
@@ -323,7 +245,7 @@ span.country-name {
     transform: translate(-50%, -50%);
     background: #e6e6e6;
     width: 60%;
-    height: 80%;
+    height: 70%;
     padding: 20px;
     border: solid white;
     border-width: 4px;
@@ -346,10 +268,33 @@ span.country-name {
     box-sizing: border-box;
 }
 
+/* Style inputs */
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
 .contactContainer {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 10px;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
 }
 
 
@@ -366,6 +311,11 @@ span.country-name {
     display: table;
     clear: both;
 }
+
+#closeAdminModal {
+    border-radius: 10px;
+}
+
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
