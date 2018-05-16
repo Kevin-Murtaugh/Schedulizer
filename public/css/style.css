@@ -7,6 +7,37 @@ input[type=text], select, textarea {
     padding: .375rem .75rem!important;
 }
 
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a{
+    color: #fff;
+}
+
 
 /**************************BOOTSTRAP OVERRIDES*******************/
 .row{
@@ -209,40 +240,8 @@ input[type=text], select, textarea {
   100% { transform: rotate(360deg); }
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-    position: relative;
-    min-height: 100%;
-  }
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
-  }
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    height: 50px;
-  }
-  
-/* .footer-background {
-    background-color:blueviolet;
-}
 
-html, body {
-    height: 100%;
-}
-#footer-location {
-    position: relative;
-    width: 100%;
-    height: 50px;
-}
 
-#footer-verbiage {
-    font-size: 8px;
-} */
 
 .publishStatusBtn {
     font-weight: bold;
@@ -333,32 +332,10 @@ span.country-name {
     box-sizing: border-box;
 }
 
-/* Style inputs */
-input[type=text], select, textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    margin-top: 6px;
-    margin-bottom: 16px;
-    resize: vertical;
-}
-
 .contactContainer {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 10px;
-}
-
-input[type=submit] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    cursor: pointer;
-}
-
-input[type=submit]:hover {
-    background-color: #45a049;
 }
 
 
