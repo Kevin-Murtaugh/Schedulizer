@@ -8,25 +8,33 @@ This application is designed to help business owners create and schedule their e
 
 Be sure to install all required npm packages by running the command `npm install` in the terminal, then follow these instructions: 
 
-1. First an account needs to be created then log in using the same information
+1. First an account needs to be created, this will be your Admin Account which you will use to setup the rest of the staff.
+
+![Sign Up Page](public/img/SignupPage.png)
 
 2. Once logged in user will be directed to the dashboard with the current weeks schedule and a navbar of their options depending on the type of account
 
 3. By clicking the settings tab the user can change how they wish to see the calendar display and update any account information
 
+![Settings Page](public/img/scheduleSettings.png)
+
 4. If the user has Admin or Manager privileges they will be able to create, edit, and delete employees by filling out the forms directed
+
+![Employee Add Page](public/img/createEmployee.png)
 
 5. If the user has Admin or Manager privileges they will be able to select a department and begin building a schedule
 
 6. Clicking the dropdown will show all employee's in that department, select an employee from the drop down, then select a start and end time, and submit
 
+![Employee Add Page](public/img/addShift2.png)
+
 7. Once Manager or Admin is pleased with the schedule publish it with commands on the right.
 
-ADD ANY GIFS HERE!!!
+![Employee Add Page](public/img/addShift3.png)
 
 ## Deployment
 
-Add notes about deployment here !!!!
+Deployed to Heroku at: [Schedulizer](https://ancient-earth-43897.herokuapp.com/)
 
 ## Built Using
 
@@ -49,6 +57,11 @@ Add notes about deployment here !!!!
 * [cookie-parser](https://github.com/expressjs/cookie-parser)
 * [method-override](https://github.com/expressjs/method-override)
 * [nodemailer](https://nodemailer.com/about/)
+* [googleapis](https://github.com/google/google-api-nodejs-client)
+* [lodash](https://lodash.com/)
+* [passport-google-oauth20](https://github.com/mstade/passport-google-oauth2)
+* [socket.io](https://socket.io/)   
+* [twilio](https://www.twilio.com/)
 
 # Versioning
 

@@ -50,11 +50,21 @@ a.nav-link {
 .lp__cta-container {
     position: absolute;
     top: 40%;
-    left: 50%;
+    left: 25%;
     transform: translate(-50%, -50%);
     text-align: center;
     padding: 2rem;
     border-radius: 5px;
+}
+.lp_cta_image{
+    position: absolute;
+    top: 40%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 2rem;
+    border-radius: 5px;
+
 }
 
 .cta__sec-heading{
