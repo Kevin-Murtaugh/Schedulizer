@@ -198,7 +198,8 @@ router.post('/add-shift/:date', ensureAuthenticated, function(req, res) {
 
 router.post("/dashboard", (req, res) => {
     console.log(req.body);
-    let adminMessage = req.body.subject;
+    let adminMessage = req.body.message;
+    let adminSubject = req.body.subject
       /******** Code below will be used to send message to all news letter users *********/
       let newsLetterUsers = db.newsLetter.findAll({
         attributes: ['email']

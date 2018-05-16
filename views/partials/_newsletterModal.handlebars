@@ -8,8 +8,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <form action="dashboard" method="post">
+                        <div class="form-group">
+                            <label for="usr"><strong>Subject:</strong></label>
+                            <input type="text" class="form-control" name="subject">
+                        </div>
                         <h4><strong>Message to news letter subscribers</strong></h4>
-                        <textarea id="subject" name="subject" placeholder="Write something.." style="height:300px"></textarea></h2>
+                        <textarea id="subject" name="message" placeholder="Write something.." style="height:350px"></textarea></h2>
                         <input type="submit" value="Submit" id="adminNewsLtrBtn">
                         <button type="button" class="btn btn-danger btn-lg" id="closeAdminModal">Close</button>
                     </form>
